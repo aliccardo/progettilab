@@ -1,0 +1,10 @@
+puts 'Utenti'
+User.create(username: 'tecnico1', label: '', email: '', sex: '', supervisor: false, admin: false, technic: true, chief: false, external: false, headtest: false)
+User.create(username: 'tecnico2', label: '', email: '', sex: '', supervisor: false, admin: false, technic: true, chief: false, external: false, headtest: false)
+User.create(username: 'utente1', label: '', email: '', sex: '', supervisor: false, admin: false, technic: false, chief: false, external: false, headtest: false)
+User.create(username: 'utente2', label: '', email: '', sex: '', supervisor: false, admin: false, technic: false, chief: false, external: false, headtest: false)
+User.create(username: 'esterno1', label: '', email: '', sex: '', supervisor: true, admin: true, chief: false, external: true, headtest: false)
+User.create(username: 'capotest1', label: '', email: '', sex: '', supervisor: true, admin: true, chief: false, external: false, headtest: true)
+User.create(username: 'Supervisore1', label: '', email: '', sex: '', supervisor: true, admin: false, chief: false, external: false, headtest: false)
+User.create(username: 'Capo1', label: '', email: '', sex: '', supervisor: true, admin: false, chief: true, external: false, headtest: false)
+User.create(username: 'Amministratore', label: '', email: '', sex: '', supervisor: true, admin: true, chief: false, external: false, headtest: false)
