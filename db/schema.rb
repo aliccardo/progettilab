@@ -16,6 +16,9 @@ ActiveRecord::Schema.define(version: 2019_01_17_122501) do
   enable_extension "citext"
   enable_extension "plpgsql"
 
+  execute 'CREATE SEQUENCE analisies_code_seq;'
+  execute 'CREATE SEQUENCE samples_code_seq;'
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
