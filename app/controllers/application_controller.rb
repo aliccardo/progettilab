@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   before_action :redirect_to_sign_in, unless: :user_signed_in?
   before_action :authenticate_user!
 
+  rescue_from DeviseLdapAuthenticatable::LdapException do |exception|
+    render :text => exception, :status => 500
+  end
+
   rescue_from ActiveRecord::RecordNotFound do |exception|
     respond_to do |format|
       format.json { head :notfound, content_type: 'text/html' }
