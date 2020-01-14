@@ -9,10 +9,7 @@ authorizations: &AUTHORIZATIONS
   # Can have multiple values, must match all to be authorized
   required_groups:
     # If only a group name is given, membership will be checked against "uniqueMember"
-    - cn=admins,ou=groups,dc=test,dc=com
-    - cn=users,ou=groups,dc=test,dc=com
-    # If an array is given, the first element will be the attribute to check against, the second the group name
-    - ["moreMembers", "cn=users,ou=groups,dc=test,dc=com"]
+    - ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
   ## Requires config.ldap_check_attributes in devise.rb to be true
   ## Can have multiple attributes and values, must match all to be authorized
   require_attribute:
@@ -22,37 +19,35 @@ authorizations: &AUTHORIZATIONS
   ## Can have multiple attributes set to true or false to check presence, all must match all to be authorized
   require_attribute_presence:
     mail: true
-    telephoneNumber: true
-    serviceAccount: false
 
 ## Environment
 
 development:
   host: localhost
   port: 389
-  attribute: cn
-  base: ou=people,dc=test,dc=com
-  admin_user: cn=admin,dc=test,dc=com
+  attribute: samaccount
+  base: ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
+  admin_user: cn=admin,ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
   admin_password: admin_password
   ssl: false
   # <<: *AUTHORIZATIONS
 
 test:
   host: localhost
-  port: 3389
+  port: 389
   attribute: cn
-  base: ou=people,dc=test,dc=com
-  admin_user: cn=admin,dc=test,dc=com
+  base: ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
+  admin_user: cn=admin,ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
   admin_password: admin_password
-  ssl: simple_tls
+  ssl: false
   # <<: *AUTHORIZATIONS
 
 production:
-  host: localhost
-  port: 636
+  host: vwpiisnrdc001.intra.isinucleare.it
+  port: 389
   attribute: cn
-  base: ou=people,dc=test,dc=com
-  admin_user: cn=admin,dc=test,dc=com
+  base: ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
+  admin_user: cn=admin,ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
   admin_password: admin_password
-  ssl: start_tls
+  ssl: false
   # <<: *AUTHORIZATIONS

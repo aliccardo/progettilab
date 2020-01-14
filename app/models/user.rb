@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   require 'open-uri'
-  devise :ldap_authenticatable # :trackable, :timeoutable, :lockable
+  devise :ldap_authenticatable, :trackable, :timeoutable, :lockable
+  attr_accessor :login, :password
 
   has_one_attached :signature
   attr_accessor :author, :metadata
