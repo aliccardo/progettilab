@@ -6,6 +6,7 @@ config:
   email: 'test@test.com'
   template: 'Template1' #Insert the last name of report's template
   site:
+    cas: http://localhost:9898
     url: ""
     smtp: ""
     domain_name: ""
