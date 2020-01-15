@@ -1,7 +1,7 @@
 config:
   application: application_name
   group: "GROUP"
-  title: "TITLE"
+  title: "ProgettiLAB"
   expired_days: 5
   email: 'test@test.com'
   template: 'Template1' #Insert the last name of report's template
@@ -25,7 +25,15 @@ config:
     links:
       -
         icon: globe
-        title: TITLE
+        title: ProgettiLAB
+        link: "" #Insert link example: http://www.google.com
+      -
+        icon: calendar
+        title: Google
+        link: "https://www.google.it" #Insert link example: http://www.google.com
+      -
+        icon: bullhorn
+        title: ciccio
         link: "" #Insert link example: http://www.google.com
 
 radon_types:
@@ -39,8 +47,8 @@ reportpdf:
   passwdforopen: ''
   logo: ""
   society: ""
-  title: "TITLE"
-  subtitle: "LONG TITLE"
+  title: "ProgettiLAB"
+  subtitle: "Gestione progetti e attività di un laboratorio"
   bottom:
     detail:
     design:
@@ -61,9 +69,9 @@ reportpdf:
   notes: false
 
 news:
-  title: ""
-  link: ""
-  source_link: ""
+  title: 'notizia vecchia'
+  link: 'https://ultimenotizie.net/vecchianotizia'
+  source_link: 'https://notiziavecchia.net'
 
 matomo:
   idsite: 1

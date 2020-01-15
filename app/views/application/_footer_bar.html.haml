@@ -18,7 +18,14 @@
         - Settings.config.footer.links.each do | link |
           .cell.text-upcase= link_to fa_icon( link['icon'], text: link['title'] ), link['link'], target: '_blank'
         .cell= link_to fa_icon('copyright', text: Settings.config.copyright.title), Settings.config.copyright.link, target: '_blank'
-      .news-wrap.cell{ data: { title: "Aggiornamenti dal tuo ultimo accesso", url: news_url, fromdate: ( current_user.last_sign_in_at || Time.now ).strftime("%Y-%m-%d"), limit: 5, source_link: root_url, target_link: '_self', confirm: 'Stai per essere indirizzato alla pagina richiesta, confermi?' } }
+        - if current_user.present?
+          .news-wrap.cell{ data: { title: "Aggiornamenti dal tuo ultimo accesso", url: news_url, fromdate: ( current_user.last_sign_in_at || Time.now ).strftime("%Y-%m-%d"), limit: 5, source_link: root_url, target_link: '_self', confirm: 'Stai per essere indirizzato alla pagina richiesta, confermi?' } }
+        - if current_user.blank?
+          .news-wrap.cell{ data: { title: "Aggiornamenti", url: news_url, fromdate: ( Time.now ).strftime("%Y-%m-%d"), limit: 5, source_link: root_url, target_link: '_self', confirm: 'Stai per essere indirizzato alla pagina richiesta, confermi?' } }
       .cell.grid-x.grid-padding-x.small-up-1
         - unless Settings.news.link.blank?
-          .news-wrap.cell{ data: { title: "#{ Settings.news.title }", source_link: "#{ Settings.news.link }", fromdate: ( current_user.last_sign_in_at || Time.now ).strftime("%Y-%m-%d"), url: "#{ Settings.news.link }" , limit: 5 } }
+          - if current_user.present?
+            .news-wrap.cell{ data: { title: "#{ Settings.news.title }", source_link: "#{ Settings.news.link }", fromdate: ( current_user.last_sign_in_at || Time.now - 1.month ).strftime("%Y-%m-%d"), url: "#{ Settings.news.link }" , limit: 5 } }
+          - if current_user.blank?
+            .news-wrap.cell{ data: { title: "#{ Settings.news.title }", source_link: "#{ Settings.news.link }", fromdate: ( Time.now - 9.days ).strftime("%Y-%m-%d"), url: "#{ Settings.news.link }" , limit: 5 } }
+
