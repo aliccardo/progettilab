@@ -66,37 +66,37 @@ class User < ApplicationRecord
 
   def self.get_users
     users = []
-    begin
-      data = JSON.parse(
-        open("#{Rails.application.credentials.api[:link]}?#{Rails.application.credentials.api[:filter]}",
-        http_basic_authentication: [Rails.application.credentials.api[:login], Rails.application.credentials.api[:secret_access_key]],
-        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read
-      )
-      local_users = User.enabled.pluck(:username)
-      users = data.map{ |u| { login: u['login'], nominativo: u['nominativo'] } if u['login'].present? && !local_users.include?( u['login'] ) }.reject{|u| u.blank? } unless data.blank? || data == "\"\""
-    rescue => ex
-    end
+#     begin
+#       data = JSON.parse(
+#         open("#{Rails.application.credentials.api[:link]}?#{Rails.application.credentials.api[:filter]}",
+#         http_basic_authentication: [Rails.application.credentials.api[:login], Rails.application.credentials.api[:secret_access_key]],
+#         ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read
+#       )
+#       local_users = User.enabled.pluck(:username)
+#       users = data.map{ |u| { login: u['login'], nominativo: u['nominativo'] } if u['login'].present? && !local_users.include?( u['login'] ) }.reject{|u| u.blank? } unless data.blank? || data == "\"\""
+#     rescue => ex
+#     end
     return users
   end
 
   def get_data
     unless Rails.env.test?
-      begin
-        data = JSON.parse(
-          open("#{Rails.application.credentials.api[:link]}?login=#{username}",
-          http_basic_authentication: [Rails.application.credentials.api[:login], Rails.application.credentials.api[:secret_access_key]],
-          ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read
-        )
-
-        unless data.blank? || data == "\"\""
-          self.label = data['nominativo'].blank? ? username : data['nominativo']
-          self.email = data['email']
-          self.sex = data['sesso']
-          self.locked_at = Time.now if !data['stato'].blank? && data['stato'] == 'scaduto'
-        end
-      rescue => ex
-        self.label = username.gsub('.', ' ').titleize if label.blank?
-      end
+#      begin
+#         data = JSON.parse(
+#           open("#{Rails.application.credentials.api[:link]}?login=#{username}",
+#           http_basic_authentication: [Rails.application.credentials.api[:login], Rails.application.credentials.api[:secret_access_key]],
+#           ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read
+#         )
+#
+#         unless data.blank? || data == "\"\""
+#           self.label = data['nominativo'].blank? ? username : data['nominativo']
+#           self.email = data['email']
+#           self.sex = data['sesso']
+#           self.locked_at = Time.now if !data['stato'].blank? && data['stato'] == 'scaduto'
+#         end
+#       rescue => ex
+#         self.label = username.gsub('.', ' ').titleize if label.blank?
+#       end
     else
       self.label = username.gsub('.', ' ').titleize if label.blank?
     end
