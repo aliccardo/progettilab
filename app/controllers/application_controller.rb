@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format =~ %r{application/json} }
+  protect_from_forgery prepend: true, with: :null_session, if: Proc.new { |c| c.request.format =~ %r{application/json} }
   before_action :set_locale
   ####################################################################
   # Non necessario con per l'autenticazioen LDAP.

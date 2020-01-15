@@ -22,6 +22,14 @@ it:
               spoofed_media_type: 'tipologia del file sconoscita'
               type: 'tipologia non concessa'
               invalid_content_type: 'tipologia file non valida'
+  login:
+    login: 'Accedi'
+    username: 'Utente'
+    sign_up: 'Registrati'
+    forgot_pwd: 'Hai dimentiato la password?'
+    no_confirm_info: "Non hai ricevuto le istruzioni sulla conferma?"
+    no_unlock_info: "Non hai ricevuto le istruzioni di sblocco?"
+    sign_in_with: 'Registrati con'
   "yes": 'Si'
   "no": 'No'
   "true": 'Si'

@@ -1,4 +1,12 @@
 en:
+  login:
+    login: 'Log in'
+    username: 'Username'
+    sign_up: 'Sign up'
+    forgot_pwd: 'Forgot your password?'
+    no_confirm_info: "Didn't receive confirmation instructions?"
+    no_unlock_info: "Didn't receive unlock instructions?"
+    sign_in_with: 'Sign in with'
   "yes": 'Yes'
   "no": 'No'
   remove_filter: 'Remove all filter'

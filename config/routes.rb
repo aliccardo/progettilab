@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  
+
   # scope "(:locale)", :locale => /#{I18n.available_locales.join('|')}/ do
     localized do
       # devise_for :users, :path => "auth", path_names: { sign_in: 'login', sign_out: 'logout' }, controllers: { cas_sessions: 'my_cas' }
+      devise_for :users, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout' }
 
       get '/home', to: 'home#index', as: 'home'
 
