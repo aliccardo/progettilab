@@ -59,32 +59,46 @@ Successivamente usare il comando "rails credentials:edit" per modificare il file
 
   secret_key_base:
 
-  cas:
-    base_url: 'https://tuoserverdi autenticazione/cas/'
+  # Utilizzato per l'autenticazione e per la sincronizzazione dei dati degli utenti con il database del personale. Procedura path 'app/models/user.rb'
+  ldap:
+    domain: @dominio.di.autenticazione.ad'
+    host: server.ldap
+    port: 389
+    admin: utente_per_ldap
+    password: password_per_ldap
+    base: OU=organizzazione2,OU=organizzazione1,DC=dominio2,DC=dominio1,DC=dominiotop
+    attributes:
+      - cn
+      - mail
+      - userPrincipalName
+      - sAMAccountName
 
   development:
     database: nomeistanza_development
     username: username
     password: password
     host: hostname
+    schema_search_path: public
+    host: hostname
+    port: 5432
+    min_messages: WARNING
   test:
     database: nomeistanza_test
     username: username
     password: password
     host: hostname
-
+    schema_search_path: public
+    host: hostname
+    port: 5432
+    min_messages: WARNING
   production:
     database: nomeistanza_production
     username: username
     password: password
+    schema_search_path: public
     host: hostname
-
-  # Link per sincronizzare i dati degli utenti con il database del personale. Procedura path 'app/models/user.rb'
-  api:
-    link: ''
-    filter: ''
-    user: username
-    secret_access_key: password
+    port: 5432
+    min_messages: WARNING
 
   deploy:
     repo_url: "https://github.com/isprambiente/progettilab.git"
