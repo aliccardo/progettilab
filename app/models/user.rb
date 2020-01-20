@@ -1,7 +1,8 @@
 class User < ApplicationRecord
-  require 'open-uri'
+  # require 'open-uri'
   devise :ldap_authenticatable, :trackable, :timeoutable, :lockable
-  attr_accessor :login, :password
+
+  attr_accessor :password
 
   has_one_attached :signature
   attr_accessor :author, :metadata
@@ -66,38 +67,68 @@ class User < ApplicationRecord
 
   def self.get_users
     users = []
-#     begin
-#       data = JSON.parse(
-#         open("#{Rails.application.credentials.api[:link]}?#{Rails.application.credentials.api[:filter]}",
-#         http_basic_authentication: [Rails.application.credentials.api[:login], Rails.application.credentials.api[:secret_access_key]],
-#         ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read
-#       )
-#       local_users = User.enabled.pluck(:username)
-#       users = data.map{ |u| { login: u['login'], nominativo: u['nominativo'] } if u['login'].present? && !local_users.include?( u['login'] ) }.reject{|u| u.blank? } unless data.blank? || data == "\"\""
-#     rescue => ex
-#     end
+    begin
+      local_users = User.enabled.pluck(:username)
+      base = Rails.application.credentials.ldap[:base]
+      filter = Net::LDAP::Filter.ne("lockoutTime", "false")
+      attrs = Rails.application.credentials.ldap[:attributes]
+      login = "#{Rails.application.credentials.ldap[:admin]}#{Rails.application.credentials.ldap[:domain]}"
+      pwd = "#{Rails.application.credentials.ldap[:password]}"
+      host = Rails.application.credentials.ldap[:host]
+      port = Rails.application.credentials.ldap[:port]
+      ldap = Net::LDAP.new host: host, port: port, auth: { method: :simple, username: login, password: pwd }
+      data = []
+      filter = Net::LDAP::Filter.eq('cn', '*')
+      ldap.search(base: base, filter: filter, attributes: attrs, return_result: false) do |entry|
+        e = {}
+        entry.each do |attribute, values|
+          e.store attribute.to_sym, values.first.strip
+        end
+        data << e
+      end
+      Rails.logger.debug("Result: #{ldap.get_operation_result.inspect}")
+      users = data.map{ |u| { login: u[:samaccountname], label: u[:cn], nominativo: u[:cn], username: u[:cn], email: u[:mail] } if u[:samaccountname].present? && !local_users.include?( u[:samaccountname] ) }.reject{|u| u.blank? } unless data.empty?
+    rescue => ex
+      Rails.logger.debug("Rescued: #{ex}")
+      raise ex unless Rails.env.production?
+    end
     return users
   end
 
   def get_data
     unless Rails.env.test?
-#      begin
-#         data = JSON.parse(
-#           open("#{Rails.application.credentials.api[:link]}?login=#{username}",
-#           http_basic_authentication: [Rails.application.credentials.api[:login], Rails.application.credentials.api[:secret_access_key]],
-#           ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read
-#         )
-#
-#         unless data.blank? || data == "\"\""
-#           self.label = data['nominativo'].blank? ? username : data['nominativo']
-#           self.email = data['email']
-#           self.sex = data['sesso']
-#           self.locked_at = Time.now if !data['stato'].blank? && data['stato'] == 'scaduto'
-#         end
-#       rescue => ex
-#         self.label = username.gsub('.', ' ').titleize if label.blank?
-#       end
+      Rails.logger.debug "get_data"
+      base = Rails.application.credentials.ldap[:base]
+      attrs = Rails.application.credentials.ldap[:attributes]
+      login = "#{Rails.application.credentials.ldap[:admin]}#{Rails.application.credentials.ldap[:domain]}"
+      pwd = "#{Rails.application.credentials.ldap[:password]}"
+      host = Rails.application.credentials.ldap[:host]
+      port = Rails.application.credentials.ldap[:port]
+      begin
+        ldap = Net::LDAP.new host: host, port: port, auth: { method: :simple, username: login, password: pwd }
+        filter = Net::LDAP::Filter.eq('samaccountname', self.username)
+        ldap.search(base: base, filter: filter, attributes: attrs, return_result: false) do |entry|
+          ldap_param = entry[:cn]
+          self.label = ldap_param.first.to_s.strip unless ldap_param.nil?
+          Rails.logger.debug "#{self.username} ha label: #{self.label}."
+          ldap_param = entry[:mail]
+          self.email =  ldap_param.first.to_s.strip unless ldap_param.nil?
+          Rails.logger.debug "#{self.username} ha mail: #{self.email}."
+          # non c'è questo attributo su LDAP
+          # ldap_param = entry[:lockoutTime]
+          # locked = ldap_param.first unless ldap_param.nil?
+          # Rails.logger.debug "#{self.username} è #{locked ? 'bloccato dal' + locked.to_s : 'attivo'}."
+          # self.locked_at = Time.now if locked
+          # non c'è questo attributo su LDAP
+          # self.sex = Devise::LDAP::Adapter.get_ldap_param(self.username,"???").first
+        end
+      rescue => ex
+        Rails.logger.debug("Rescued: #{ex}")
+        raise ex unless Rails.env.production?
+        self.label = username.gsub('.', ' ').titleize if label.blank?
+      end
     else
+       Rails.logger.debug "get_data(), Rails.env.test? #{Rails.env.test?}"
       self.label = username.gsub('.', ' ').titleize if label.blank?
     end
   end
