@@ -24,31 +24,31 @@ authorizations: &AUTHORIZATIONS
 ## Environment
 
 development:
-  host: localhost
-  port: 389
-  attribute: samaccount
-  base: ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
-  admin_user: cn=admin,ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
-  admin_password: admin_password
+  host: <%= Rails.application.credentials.ldap[:host] %>
+  port: <%= Rails.application.credentials.ldap[:port] %>
+  attribute: userPrincipalName
+  base: <%= Rails.application.credentials.ldap[:base] %>
+  admin_user: <%= Rails.application.credentials.ldap[:admin] %>
+  admin_password: <%= Rails.application.credentials.ldap[:password] %>
   ssl: false
   # <<: *AUTHORIZATIONS
 
 test:
-  host: localhost
-  port: 389
-  attribute: cn
-  base: ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
-  admin_user: cn=admin,ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
-  admin_password: admin_password
+  host: <%= Rails.application.credentials.ldap[:host] %>
+  port: <%= Rails.application.credentials.ldap[:port] %>
+  attribute: userPrincipalName
+  base: <%= Rails.application.credentials.ldap[:base] %>
+  admin_user: <%= Rails.application.credentials.ldap[:admin] %>
+  admin_password: <%= Rails.application.credentials.ldap[:password] %>
   ssl: false
   # <<: *AUTHORIZATIONS
 
 production:
-  host: vwpiisnrdc001.intra.isinucleare.it
-  port: 389
-  attribute: cn
-  base: ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
-  admin_user: cn=admin,ou=Utenti,ou=ISIN,dc=intra,dc=isinucleare,dc=it
-  admin_password: admin_password
+  host: <%= Rails.application.credentials.ldap[:host] %>
+  port: <%= Rails.application.credentials.ldap[:port] %>
+  attribute: userPrincipalName
+  base: <%= Rails.application.credentials.ldap[:base] %>
+  admin_user: <%= Rails.application.credentials.ldap[:admin] %>
+  admin_password: <%= Rails.application.credentials.ldap[:password] %>
   ssl: false
   # <<: *AUTHORIZATIONS
