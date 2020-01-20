@@ -11,3 +11,5 @@
 ## Previous Developers
 
 ## Contributors
+
+* Antonio Liccardo <antonio.liccardo@citelgroup.it> - Citel Group

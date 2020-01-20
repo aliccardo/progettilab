@@ -1,2 +1,3 @@
 - Francesco Loreti - ISPRA
 - Andrea Ranaldi - ISPRA
+- Antonio Liccardo - Citel Group
