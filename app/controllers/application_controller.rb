@@ -1,10 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true, with: :null_session, if: Proc.new { |c| c.request.format =~ %r{application/json} }
   before_action :set_locale
-  ####################################################################
-  # Non necessario con per l'autenticazioen LDAP.
-  # before_action :redirect_to_sign_in, unless: :user_signed_in?
-  ###################################################################
   before_action :authenticate_user!
 
   rescue_from DeviseLdapAuthenticatable::LdapException do |exception|
@@ -90,12 +86,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   private
-
-  def redirect_to_sign_in
-    redirect_to new_user_session_path
-  end
 
   def default_url_options(options = {})
     if I18n.default_locale != I18n.locale
