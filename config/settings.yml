@@ -27,15 +27,6 @@ config:
         icon: globe
         title: ProgettiLAB
         link: "" #Insert link example: http://www.google.com
-      -
-        icon: calendar
-        title: Google
-        link: "https://www.google.it" #Insert link example: http://www.google.com
-      -
-        icon: bullhorn
-        title: ciccio
-        link: "" #Insert link example: http://www.google.com
-
 radon_types:
   nothing: 0
   concentration: 1
@@ -69,9 +60,9 @@ reportpdf:
   notes: false
 
 news:
-  title: 'notizia vecchia'
-  link: 'https://ultimenotizie.net/vecchianotizia'
-  source_link: 'https://notiziavecchia.net'
+  title: ''
+  link: ''
+  source_link: ''
 
 matomo:
   idsite: 1
