@@ -75,7 +75,17 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.author = current_user.label
-    @user.destroy
+    respond_to do |format|
+      if @user.destroy
+        format.html { redirect_to action: 'index', status: 303, notice: I18n.t('notice', scope: 'users.destroy', default: 'User was successfully deleted.') }
+        format.js
+        format.json { render json: @user, status: :ok }
+      else
+        format.html { redirect_to action: 'index', status: :unprocessable_entity }
+        format.js
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def lock

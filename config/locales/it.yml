@@ -874,6 +874,7 @@ it:
     destroy:
       title: 'Cancella utente'
       action: 'Cancellato utente'
+      notice: 'Utente cancellato con successo.'
   import:
       title: 'Importa file multiplo'
       list: 'Lista campioni'
