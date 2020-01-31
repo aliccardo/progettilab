@@ -870,6 +870,7 @@ it:
     update:
       title: 'Modifica utente'
       action: 'Modificato utente'
+      notice: 'Utente modificato con successo.'
     destroy:
       title: 'Cancella utente'
       action: 'Cancellato utente'

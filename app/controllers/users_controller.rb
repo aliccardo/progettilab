@@ -60,7 +60,7 @@ class UsersController < ApplicationController
     @user.author = current_user.label
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: I18n.t('notice', scope: 'units.update', default: 'User was successfully updated.') }
+        format.html { redirect_to @user, notice: I18n.t('notice', scope: 'users.update', default: 'User was successfully updated.') }
         format.js
         format.json { render json: @user, status: :ok }
       else
