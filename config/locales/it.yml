@@ -847,7 +847,7 @@ it:
     title: 'Utenti'
     fields:
       label: 'Nominativo'
-      username: 'Nominativo'
+      username: 'Utente'
       email: 'E-mail'
       manager: 'Responsabile proc/att'
       reference: 'Referente proc/att'

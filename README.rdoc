@@ -68,7 +68,8 @@ Successivamente usare il comando "rails credentials:edit" per modificare il file
     password: password_per_ldap
     base: OU=organizzazione2,OU=organizzazione1,DC=dominio2,DC=dominio1,DC=dominiotop
     attributes:
-      - cn
+      - sn
+      - givenName
       - mail
       - userPrincipalName
       - sAMAccountName

@@ -4,6 +4,7 @@
 		%thead
 			%tr
 				%th= t('label', scope: 'users.fields', default: 'Label')
+				%th= t('username', scope: 'users.fields', default: 'username')
 				%th.text-center{ data: { orderable: "false", searchable: "false"} }= t('email', scope: 'users.fields', default: 'E-mail')
 				%th.text-center{ data: { searchable: "false"} }= t('technician', scope: 'users.fields', default: 'Laboratory technician')
 				%th.text-center{ data: { searchable: "false"} }= t('headtest', scope: 'users.fields', default: 'Test manager')

@@ -20,6 +20,7 @@
       'ajax': { 'url': url, 'dataType': 'json' }
       'columns': [
         { 'data': 'label', 'name': 'users.label' }
+        { 'data': 'username', 'name': 'users.username' }
         { 'data': 'email', 'name': 'users.email' }
         { 'name': 'users.technic' }
         { 'name': 'users.headtest' }
@@ -30,7 +31,7 @@
       ]
       'columnDefs': [
         {
-          'aTargets': [ 2 ]
+          'aTargets': [ 3 ]
           'class': 'text-center'
           'mRender': ( data, type, full ) ->
             v = ''
@@ -39,7 +40,7 @@
             return v
         }
         {
-          'aTargets': [ 3 ]
+          'aTargets': [ 4 ]
           'class': 'text-center'
           'mRender': ( data, type, full ) ->
             v = ''
@@ -48,7 +49,7 @@
             return v
         }
         {
-          'aTargets': [ 4 ]
+          'aTargets': [ 5 ]
           'class': 'text-center'
           'mRender': ( data, type, full ) ->
             v = ''
@@ -57,7 +58,7 @@
             return v
         }
         {
-          'aTargets': [ 5 ]
+          'aTargets': [ 6 ]
           'class': 'text-center'
           'mRender': ( data, type, full ) ->
             v = ''
@@ -66,7 +67,7 @@
             return v
         }
         {
-          'aTargets': [ 6 ]
+          'aTargets': [ 7 ]
           'class': 'text-center'
           'mRender': ( data, type, full ) ->
             v = ''
@@ -75,7 +76,7 @@
             return v
         }
         {
-          'aTargets': [ 7 ]
+          'aTargets': [ 8 ]
           'mRender': ( data, type, full ) ->
             v = ''
             if !$('html').hasClass('is-reveal-open')

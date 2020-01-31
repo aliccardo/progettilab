@@ -87,7 +87,7 @@ class User < ApplicationRecord
         data << e
       end
       Rails.logger.debug("Result: #{ldap.get_operation_result.inspect}")
-      users = data.map{ |u| { login: u[:samaccountname], label: u[:cn], nominativo: u[:cn], username: u[:cn], email: u[:mail] } if u[:samaccountname].present? && !local_users.include?( u[:samaccountname] ) }.reject{|u| u.blank? } unless data.empty?
+      users = data.map{ |u| { login: u[:samaccountname], label: "#{u[:sn]} #{u[:givenname]}", nominativo: "#{u[:sn]} #{u[:givenname]}", username: "#{u[:sn]} #{u[:givenname]}", email: u[:mail] } if u[:samaccountname].present? && !local_users.include?( u[:samaccountname] ) }.reject{|u| u.blank? } unless data.empty?
     rescue => ex
       Rails.logger.debug("Rescued: #{ex}")
       raise ex unless Rails.env.production?
@@ -108,8 +108,11 @@ class User < ApplicationRecord
         ldap = Net::LDAP.new host: host, port: port, auth: { method: :simple, username: login, password: pwd }
         filter = Net::LDAP::Filter.eq('samaccountname', self.username)
         ldap.search(base: base, filter: filter, attributes: attrs, return_result: false) do |entry|
-          ldap_param = entry[:cn]
-          self.label = ldap_param.first.to_s.strip unless ldap_param.nil?
+          ldap_param = entry[:sn]
+          lbl1 = ldap_param.first.to_s.strip unless ldap_param.nil?
+          ldap_param = entry[:givenname]
+          lbl2 = ldap_param.first.to_s.strip unless ldap_param.nil?
+          self.label = "#{lbl1} #{lbl2}"
           Rails.logger.debug "#{self.username} ha label: #{self.label}."
           ldap_param = entry[:mail]
           self.email =  ldap_param.first.to_s.strip unless ldap_param.nil?
