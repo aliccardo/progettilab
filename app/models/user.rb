@@ -87,7 +87,7 @@ class User < ApplicationRecord
         data << e
       end
       Rails.logger.debug("Result: #{ldap.get_operation_result.inspect}")
-      users = data.map{ |u| { login: u[:samaccountname], label: "#{u[:sn]} #{u[:givenname]}", nominativo: "#{u[:sn]} #{u[:givenname]}", username: "#{u[:sn]} #{u[:givenname]}", email: u[:mail] } if u[:samaccountname].present? && !local_users.include?( u[:samaccountname] ) }.reject{|u| u.blank? } unless data.empty?
+      users = data.map{ |u| { login: u[:samaccountname], label: "#{u[:sn]} #{u[:givenname]}", nominativo: "#{u[:sn]} #{u[:givenname]}", username: "#{u[:sn]} #{u[:givenname]}", email: u[:mail] } if u[:samaccountname].present? && !local_users.include?( u[:samaccountname] ) }.reject{ |u| u.blank? }.sort{ |a, b| a[:nominativo] <=> b[:nominativo] } unless data.empty?
     rescue => ex
       Rails.logger.debug("Rescued: #{ex}")
       raise ex unless Rails.env.production?
