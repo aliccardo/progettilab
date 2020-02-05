@@ -20,7 +20,7 @@
       'ajax': { 'url': url, 'dataType': 'json' }
       'columns': [
         { 'data': 'label', 'name': 'users.label' }
-        { 'data': 'username', 'name': 'users.username' }
+        { 'data': 'username', 'name': 'users.username.upcase' }
         { 'data': 'email', 'name': 'users.email' }
         { 'name': 'users.technic' }
         { 'name': 'users.headtest' }
@@ -31,6 +31,10 @@
       ]
       'columnDefs': [
         {
+          'aTargets': [ 1 ]
+          'class': 'text-upcase'
+        }
+         {
           'aTargets': [ 3 ]
           'class': 'text-center'
           'mRender': ( data, type, full ) ->
