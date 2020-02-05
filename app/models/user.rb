@@ -68,7 +68,7 @@ class User < ApplicationRecord
   def self.get_users
     users = []
     begin
-      local_users = User.enabled.pluck(:username)
+      local_users = User.enabled.pluck(:username).map(&:downcase)
       base = Rails.application.credentials.ldap[:base]
       filter = Net::LDAP::Filter.ne("lockoutTime", "false")
       attrs = Rails.application.credentials.ldap[:attributes]
@@ -87,7 +87,7 @@ class User < ApplicationRecord
         data << e
       end
       Rails.logger.debug("Result: #{ldap.get_operation_result.inspect}")
-      users = data.map{ |u| { login: u[:samaccountname], label: "#{u[:sn]} #{u[:givenname]}", nominativo: "#{u[:sn]} #{u[:givenname]}", username: "#{u[:sn]} #{u[:givenname]}", email: u[:mail] } if u[:samaccountname].present? && !local_users.include?( u[:samaccountname] ) }.reject{ |u| u.blank? }.sort{ |a, b| a[:nominativo] <=> b[:nominativo] } unless data.empty?
+      users = data.map{ |u| { login: u[:samaccountname].downcase, label: "#{u[:sn]} #{u[:givenname]}", nominativo: "#{u[:sn]} #{u[:givenname]}", username: "#{u[:sn]} #{u[:givenname]}", email: u[:mail] } if u[:samaccountname].present? && !local_users.include?( u[:samaccountname].downcase ) }.reject{ |u| u.blank? }.sort{ |a, b| a[:nominativo] <=> b[:nominativo] } unless data.empty?
     rescue => ex
       Rails.logger.debug("Rescued: #{ex}")
       raise ex unless Rails.env.production?
@@ -106,7 +106,7 @@ class User < ApplicationRecord
       port = Rails.application.credentials.ldap[:port]
       begin
         ldap = Net::LDAP.new host: host, port: port, auth: { method: :simple, username: login, password: pwd }
-        filter = Net::LDAP::Filter.eq('samaccountname', self.username)
+        filter = Net::LDAP::Filter.eq('samaccountname', self.username.downcase)
         ldap.search(base: base, filter: filter, attributes: attrs, return_result: false) do |entry|
           ldap_param = entry[:sn]
           lbl1 = ldap_param.first.to_s.strip unless ldap_param.nil?
