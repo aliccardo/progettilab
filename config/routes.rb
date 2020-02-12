@@ -78,9 +78,14 @@ Rails.application.routes.draw do
         end
       end
       get 'notauthorized', :to => redirect('/401.html')
+
+      authenticated :user do
+        root to: 'home#index', as: :authenticated_root
+      end
+      root to: redirect('/sessione/login')
+
     end
 
-    root 'home#index'
   #end
 
   # get '/:locale', to: 'home#index'
