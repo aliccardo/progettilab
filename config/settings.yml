@@ -3,12 +3,14 @@ config:
   group: "GROUP"
   title: "ProgettiLAB"
   expired_days: 5
-  email: 'test@test.com'
+  email: 'procedimenti.ural@isinucleare.it'
   template: 'Template1' #Insert the last name of report's template
   site:
-    url: ""
-    smtp: ""
-    domain_name: ""
+    url: <%= Rails.application.credentials.mail[:url] %>
+    protocol: <%= Rails.application.credentials.mail[:protocol] %>
+    smtp: <%= Rails.application.credentials.mail[:smtp] %>
+    port: <%= Rails.application.credentials.mail[:port] %>
+    domain_name: <%= Rails.application.credentials.mail[:domain_name] %>
   logo1:
     image: "" #Insert image name with extension example: image.png
     link: "" #Insert link example: http://www.google.com

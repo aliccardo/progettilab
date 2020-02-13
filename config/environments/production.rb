@@ -85,15 +85,15 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: Settings.config.site.url, :protocol => 'https' }
+  config.action_mailer.default_url_options = { host: Settings.config.site.url, :protocol => 'Settings.config.site.potocol' }
   config.action_mailer.smtp_settings = {
     address:              Settings.config.site.smtp,
-    port:                 25,
+    port:                 Settings.config.site.port,
     domain:               Settings.config.site.domain_name,
-    #user_name:            '', # Al momento se non messa login e passwod il server non invia le email
-    #password:             '',
-    #authentication:       'plain',
-    ssl:                  false,
+    user_name:            Rails.application.credentials.mail[:username], # Se non sono specificate login e passwod il server non invia le email
+    password:             Rails.application.credentials.mail[:password],
+    authentication:       'plain',
+    enable_starttls_auto: true, #anche se è di default, preferisco specificarla.
     openssl_verify_mode:  'none'
   }
 
