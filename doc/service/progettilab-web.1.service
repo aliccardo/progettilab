@@ -1,0 +1,19 @@
+[Unit]
+PartOf=progettilab.target
+StopWhenUnneeded=yes
+
+[Service]
+User=progettilab
+WorkingDirectory=/home/progettilab/progettilab
+Environment=PORT=8080
+Environment=PS=web.1
+Environment="RAILS_MASTER_KEY=<la tua config/master.key>"
+ExecStart=/bin/bash -lc 'exec -a "progettilab-web.1" bin/rails server -b webprogettilab.web -p $PORT -e production'
+Restart=always
+RestartSec=14s
+StandardInput=null
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=%n
+KillMode=mixed
+TimeoutStopSec=5

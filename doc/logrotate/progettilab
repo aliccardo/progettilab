@@ -1,0 +1,11 @@
+/home/progettilab/progettilab/log/*.log {
+    weekly
+    missingok
+    rotate 52
+    compress
+    delaycompress
+    notifempty
+    copytruncate
+
+    su progettilab progettilab
+}
