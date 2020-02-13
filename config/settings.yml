@@ -38,10 +38,10 @@ report_types:
   multiple: 1
 reportpdf:
   passwdforopen: ''
-  logo: ""
+  logo: 'logo_stampa_isin.png'
   society: ""
   title: "ProgettiLAB"
-  subtitle: "Gestione progetti e attività di un laboratorio"
+  subtitle: "ISPETTORATO NAZIONALE\nPER LA SICUREZZA NUCLEARE\nE LA RADIOPROTEZIONE"
   bottom:
     detail:
     design:
