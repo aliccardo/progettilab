@@ -13,25 +13,25 @@ Il sito è sviluppato in linguaggio Ruby 2.6 e framework Rails 5.2 .
 === Specifiche tecniche progetto
 * [Ruby 2.6.x](https://www.ruby-lang.org)
 * [RVM](https://rvm.io/)
-* Ruby on Rais 5.2
+* Ruby on Rails 5.2
 * [Postgresql](http://www.postgresql.org/)
 * HTML5 + CSS3
 * jQuery3
 * Zurb Foundation 6.5
-* [Server CAS](http://rubycas.github.io/) *
+* [LDAP Authentication](https://github.com/cschiewek/devise_ldap_authenticatable) *
 * [Openssl](https://www.openssl.org/)
 
-\* In alternativa al server CAS e` possibile utilizzare altri sistemi di autenticazione come ldap
+\* In alternativa ad LDAP è possibile utilizzare altri sistemi di autenticazione, come [CAS](http://rubycas.github.io/)
 
 === Requisiti tecnici per ambiente server
 * Sistema operativo: Linux
 * Gestore pacchetto ruby: RVM
 * Linguaggio di programmazione: Ruby 2.6
-* Framework: Rais 5.2
+* Framework: Rails 5.2
 * Database: PostgreSQL >= 11
 * Deploy applicazione: Accesso ssh per deploy applicazione via Capistrano
 * Webserver: Nginx + Puma
-* Autenticazione utenti: CAS Server
+* Autenticazione utenti: LDAP (o Active Directory)
 
 === Requisiti minimi per i client
 * Mozilla Firefox 53, Chrome 58, Microsoft Edge, Internet Explorer 11, Safari 9.0 o altro browser compatibile con HTML 5, CSS 3 e jQuery3;
