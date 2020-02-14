@@ -93,6 +93,8 @@ Rails.application.configure do
     user_name:            Rails.application.credentials.mail[:username], # Se non sono specificate login e passwod il server non invia le email
     password:             Rails.application.credentials.mail[:password],
     authentication:       'plain',
+    tls:                  true,
+    ssl:                  true,
     enable_starttls_auto: true, #anche se è di default, preferisco specificarla.
     openssl_verify_mode:  'none'
   }
