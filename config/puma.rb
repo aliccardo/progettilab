@@ -7,13 +7,34 @@
 threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
 threads threads_count, threads_count
 
-# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-#
-port        ENV.fetch("PORT") { 3000 }
+# Default to production
+rails_env = ENV['RAILS_ENV'] || 'development'
+environment rails_env
 
-# Specifies the `environment` that Puma will run in.
-#
-environment ENV.fetch("RAILS_ENV") { "development" }
+if rails_env == 'production'
+  app_dir = File.expand_path('../..', __FILE__)
+  shared_dir = "#{app_dir}/tmp"
+  # Set up socket location
+  bind "unix://#{shared_dir}/sockets/puma.sock"
+
+  # Logging
+  stdout_redirect "#{app_dir}/log/puma.stdout.log", "#{app_dir}/log/puma.stderr.log", true
+
+  # Set master PID and state locations
+  pidfile "#{shared_dir}/pids/puma.pid"
+  state_path "#{shared_dir}/pids/puma.state"
+  activate_control_app
+
+  on_worker_boot do
+    require "active_record"
+    ActiveRecord::Base.connection.disconnect! rescue ActiveRecord::ConnectionNotEstablished
+    ActiveRecord::Base.establish_connection(YAML.load_file("#{app_dir}/config/database.yml")[rails_env])
+  end
+else
+  # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
+  #
+  port        ENV.fetch("PORT") { 3000 }
+end
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
