@@ -17,6 +17,9 @@
 # Ignore Byebug command history file.
 .byebug_history
 
+# KDE Dolphin directory settings.
+.directory 
+
 rails_best_practices_output.html
 # Ignore master key for decrypting credentials and more.
 /config/master.key
