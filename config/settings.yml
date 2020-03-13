@@ -1,7 +1,7 @@
 config:
-  application: application_name
-  group: "GROUP"
-  title: "ProgettiLAB"
+  application: progettilab
+  group: "ISIN"
+  title: "Ispettorato nazionale per la sicurezza nucleare e la radioprotezione"
   expired_days: 5
   email: 'procedimenti.ural@isinucleare.it'
   template: 'Template1' #Insert the last name of report's template
@@ -12,23 +12,23 @@ config:
     port: <%= Rails.application.credentials.mail[:port] %>
     domain_name: <%= Rails.application.credentials.mail[:domain_name] %>
   logo1:
-    image: "" #Insert image name with extension example: image.png
-    link: "" #Insert link example: http://www.google.com
+    image: "logo_ministero.png"
+    link: "http://www.isinucleare.it/"
   logo2:
-    image: "" #Insert image name with extension example: image.png
-    link: "" #Insert link example: http://www.google.com
+    image: "logo_isin.jpg"
+    link: "http://www.isinucleare.it/"
   logo3:
-    image: "" #Insert image name with extension example: image.png
-    link: "" #Insert link example: http://www.google.com
+    image: "foglia.png"
+    link: "http://www.isinucleare.it/"
   copyright:
-    title: ISPRA
-    link: http://www.isprambiente.gov.it
+    title: ISIN
+    link: "#"
   footer:
     links:
       -
         icon: globe
-        title: ProgettiLAB
-        link: "" #Insert link example: http://www.google.com
+        title: Gestione Procedimenti attività URAL
+        link: "#" #Insert link example: http://www.google.com
 radon_types:
   nothing: 0
   concentration: 1
@@ -38,10 +38,10 @@ report_types:
   multiple: 1
 reportpdf:
   passwdforopen: ''
-  logo: 'logo_stampa_isin.png'
-  society: ""
-  title: "ProgettiLAB"
-  subtitle: "ISPETTORATO NAZIONALE\nPER LA SICUREZZA NUCLEARE\nE LA RADIOPROTEZIONE"
+  logo: "logo_stampa_isin.png"
+  society: "logo_stampa_isin.png"
+  title: "Gestione proc/att"
+  subtitle: "Ispettorato nazionale\nper la sicurezza nucleare\ne la radioprotezione"
   bottom:
     detail:
     design:
@@ -51,11 +51,11 @@ reportpdf:
     multiple:
     destroyer:
     log:
-  author: "AUTHOR NAME"
-  subject: "SUBJECT "
-  keywords: "keywords"
-  creator: "CREATOR NAME"
-  producer: "PRODUCER NAME"
+  author: "ISIN"
+  subject: "Proc/Att "
+  keywords: "proc/att"
+  creator: "ISIN"
+  producer: "ISIN"
   footer: false
   qrcode: false
   barcode: false
