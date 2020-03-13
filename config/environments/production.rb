@@ -85,7 +85,7 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: Settings.config.site.url, :protocol => 'Settings.config.site.potocol' }
+  config.action_mailer.default_url_options = { host: Settings.config.site.url, :protocol => Settings.config.site.potocol }
   config.action_mailer.smtp_settings = {
     address:              Settings.config.site.smtp,
     port:                 Settings.config.site.port,
