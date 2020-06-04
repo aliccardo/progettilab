@@ -1,9 +1,9 @@
 %tr.valign-middle{ id: f.object.row }
   %td= f.object.nuclide.title
-  %td= f.text_field :result, label: 'false', options: { class: "result" }, required: true
+  %td= f.text_field :result, label: 'false', options: { class: "result" }, required: f.object.mcr.blank?
   %td= f.select_field :result_unit_id, @units.map{ |u| [ u.title, u.id ] }, { include_blank: false, label: 'false' }, { class: 'input-group-field result_unit' }
   %td= f.select_field :symbol, f.object.symbols, { include_blank: false, label: 'false' }, { class: 'input-group-field symbol' }
-  %td= f.text_field :indecision, label: 'false', options: { class: "result" }, required: f.object.symbol != '<', class: 'required'
+  %td= f.text_field :indecision, label: 'false', options: { class: "result" }, required: (f.object.mcr.blank? && f.object.symbol != '<'), class: 'required'
   %td= f.select_field :indecision_unit_id, @units.map{ |u| [ u.title, u.id ] }, { include_blank: false, label: 'false' }, { class: 'input-group-field indecision_unit' }
   %td= f.text_field :mcr, label: 'false'
   %td= f.text_field :absence_analysis, label: 'false'
