@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_17_122501) do
+ActiveRecord::Schema.define(version: 2020_06_04_161012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2019_01_17_122501) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "mcr_unit_id", default: 4
     t.index ["absent"], name: "index_analisy_results_on_absent"
     t.index ["active"], name: "index_analisy_results_on_active"
     t.index ["analisy_id", "nuclide_id", "active"], name: "index_analisy_results_on_analisy_id_and_nuclide_id_and_active", unique: true
@@ -401,6 +402,7 @@ ActiveRecord::Schema.define(version: 2019_01_17_122501) do
   add_foreign_key "analisy_results", "analisies", on_update: :cascade, on_delete: :cascade
   add_foreign_key "analisy_results", "nuclides", on_update: :cascade, on_delete: :restrict
   add_foreign_key "analisy_results", "units", column: "indecision_unit_id", on_update: :cascade, on_delete: :restrict
+  add_foreign_key "analisy_results", "units", column: "mcr_unit_id", on_update: :cascade, on_delete: :restrict
   add_foreign_key "analisy_results", "units", column: "result_unit_id", on_update: :cascade, on_delete: :restrict
   add_foreign_key "analisy_types", "instructions", on_delete: :nullify
   add_foreign_key "analisy_users", "analisies", on_delete: :cascade

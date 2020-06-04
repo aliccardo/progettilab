@@ -4,6 +4,7 @@ class AnalisyResult < ApplicationRecord
 
   belongs_to :result_unit, :class_name => "Unit", :foreign_key => "result_unit_id"
   belongs_to :indecision_unit, :class_name => "Unit", :foreign_key => "indecision_unit_id"
+  belongs_to :mcr_unit, :class_name => "Unit", :foreign_key => "mcr_unit_id"
 
   has_many :analisy_result_reports, :class_name => "AnalisyResultReport", source: :analisy_result
   has_many :reports, through: :analisy_result_reports, :class_name => "Report", source: :report
@@ -25,6 +26,7 @@ class AnalisyResult < ApplicationRecord
 
   validates_presence_of :result_unit_id, message: "Unità di misura mancante!", on: :update, if: Proc.new { |result| result.absence_analysis.blank?}
   validates_presence_of :indecision_unit_id, message: "Unità di misura della incertezza mancante!", on: :update, if: Proc.new { |result| result.absence_analysis.blank?}
+  validates_presence_of :mcr_unit_id, message: "Unità di misura della MCR mancante!", on: :update, if: Proc.new { |result| result.absence_analysis.blank?}
 
   before_validation :prerequisite
   before_save :create_log
@@ -53,7 +55,7 @@ class AnalisyResult < ApplicationRecord
   end
 
   def set_results
-    mcr_text = (mcr.blank?)? '':  "; MCR=#{mcr} #{result_unit.html unless result_unit_id.blank?}"
+    mcr_text = (mcr.blank?)? '':  "; MCR=#{mcr} #{mcr_unit.html unless mcr_unit_id.blank?}"
     Rails.logger.debug "mcr è: #{mcr_text}."
     Rails.logger.debug "result è: #{result}."
     self.full_result = unless result.blank?
@@ -119,6 +121,7 @@ class AnalisyResult < ApplicationRecord
         self.indecision = ''
         self.indecision_unit_id = :null
         self.mcr = ''
+        self.mcr_unit_id = :null
         self.full_result = ''
         self.absent = true
         self.full_result = absence_analysis
@@ -127,6 +130,7 @@ class AnalisyResult < ApplicationRecord
         errors.add :result_unit_id, 'campo obbligatorio, se MCR è vuoto' if result_unit_id.blank? && mcr.blank?
         errors.add :indecision, 'campo obbligatorio, se MCR è vuoto' if symbol == '±' && indecision.blank? && mcr.blank?
         errors.add :indecision_unit_id, 'campo obbligatorio, se MCR è vuoto' if symbol == '±' && indecision_unit_id.blank? && mcr.blank?
+        errors.add :mcr_unit_id, 'campo obbligatorio, se MCR ha un valore' if mcr_unit_id.blank? && mcr.present?
         if errors.blank?
           self.absent = false
         end

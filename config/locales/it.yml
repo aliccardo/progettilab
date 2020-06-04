@@ -717,6 +717,8 @@ it:
       indecision_unit: 'Unità di misura'
       indecision_unit_id: 'Unità di misura'
       mcr: 'MCR'
+      mcr_unit: 'Unità di misura'
+      mcr_unit_id: 'Unità di misura'
       absent: 'Mancata analisi'
       absence_analysis: 'Causa mancata analisi'
       full_result: 'Risultato'
