@@ -47,7 +47,7 @@ reportpdf:
     design:
     timetable:
     sample:
-    analisy:
+    analisy: "Nome e indirizzo del laboratorio:\r\nISIN - Ispettorato nazionale per la sicurezza nucleare e la radioprotezione\r\nVia Capitan Bavastro, 116 – 00154 Roma"
     multiple:
     destroyer:
     log:

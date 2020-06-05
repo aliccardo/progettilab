@@ -125,7 +125,11 @@ def footer
       text_box "Responsabile di area", :size => text_size, :at => [left+20, cursor], style: :bold
       text_box "#{@chief}", :size => text_size, :at => [left+160, cursor]
       # move_down(20)
-      text_box "#{Settings.reportpdf.bottom.analisy}", :at => [left+650, cursor-3], :size => text_size-1
+      # Footer
+      if @analisy_type_id == 1 # @analisy_type == 'Concentrazione di attività di radon in aria (SSNTD\'s)'
+        move_up 20
+        text_box "#{Settings.reportpdf.bottom.analisy}", :at => [left+450, cursor], :size => text_size-2, :overflow => :shrink_to_fit
+      end
     end
   end
 
@@ -133,6 +137,7 @@ end
 
 def initialization( result )
   @analisy_type = result.analisy_type.title
+  @analisy_type_id = result.analisy_type.id
 	@chief = result.chief
 	@headtest = result.headtest
 	@technics = result.technics
