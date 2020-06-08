@@ -21,10 +21,9 @@ json.analisy do
   json.headtests  analisy.analisy_headtest_users.map{ |u| u.label if User.headtests.pluck(:id).include?( u.id ) }.compact.join(',')
   json.technics   analisy.analisy_technic_users.map{ |u| u.label if User.technics.pluck(:id).include?( u.id ) }.compact.join(',')
   json.valid?     (
-                    analisy.valid? && 
-                    analisy.analisy_chief_users.map{ |u| u.label if User.chiefs.pluck(:id).include?( u.id ) }.compact.present? && 
-                    analisy.analisy_headtest_users.map{ |u| u.label if User.headtests.pluck(:id).include?( u.id ) }.compact.present? &&
-                    analisy.analisy_technic_users.map{ |u| u.label if User.technics.pluck(:id).include?( u.id ) }.compact.present?
+                    analisy.valid? &&
+                    analisy.analisy_chief_users.map{ |u| u.label if User.chiefs.pluck(:id).include?( u.id ) }.compact.present? &&
+                    analisy.analisy_headtest_users.map{ |u| u.label if User.headtests.pluck(:id).include?( u.id ) }.compact.present?
                   )
   json.url        edit_job_sample_analisy_url(job_id: analisy.job.id, sample_id: analisy.sample.id, id: analisy.id)
 end

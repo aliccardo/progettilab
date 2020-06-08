@@ -23,9 +23,8 @@ json.analisy do
   json.technics   result.analisy.analisy_technic_users.map{ |u| u.label if User.technics.pluck(:id).include?( u.id ) }.compact.join(',')
   json.valid? (
                 result.analisy.valid? &&
-                result.analisy.analisy_chief_users.map{ |u| u.label if User.chiefs.pluck(:id).include?( u.id ) }.compact.present? && 
-                result.analisy.analisy_headtest_users.map{ |u| u.label if User.headtests.pluck(:id).include?( u.id ) }.compact.present? &&
-                result.analisy.analisy_technic_users.map{ |u| u.label if User.technics.pluck(:id).include?( u.id ) }.compact.present?
+                result.analisy.analisy_chief_users.map{ |u| u.label if User.chiefs.pluck(:id).include?( u.id ) }.compact.present? &&
+                result.analisy.analisy_headtest_users.map{ |u| u.label if User.headtests.pluck(:id).include?( u.id ) }.compact.present?
               )
   json.url edit_job_sample_analisy_url(job_id: result.job.id, sample_id: result.sample.id, id: result.analisy.id)
 end
@@ -38,8 +37,7 @@ json.valid? (
               result.sample.valid? &&
               result.analisy.valid? &&
               result.valid? &&
-              result.analisy.analisy_chief_users.map{ |u| u.label if User.chiefs.pluck(:id).include?( u.id ) }.compact.present? && 
-              result.analisy.analisy_headtest_users.map{ |u| u.label if User.headtests.pluck(:id).include?( u.id ) }.compact.present? &&
-              result.analisy.analisy_technic_users.map{ |u| u.label if User.technics.pluck(:id).include?( u.id ) }.compact.present?
+              result.analisy.analisy_chief_users.map{ |u| u.label if User.chiefs.pluck(:id).include?( u.id ) }.compact.present? &&
+              result.analisy.analisy_headtest_users.map{ |u| u.label if User.headtests.pluck(:id).include?( u.id ) }.compact.present?
             )
 json.url edit_job_sample_analisy_result_url(job_id: result.job.id, sample_id: result.sample.id, analisy_id: result.analisy.id, id: result.id)

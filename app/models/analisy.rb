@@ -36,7 +36,6 @@ class Analisy < ApplicationRecord
 
   validates :analisy_chief_user_ids, presence: true, :unless => Proc.new { |analisy| analisy.skip_validate == 'true' }
   validates :analisy_headtest_user_ids, presence: true, :unless => Proc.new { |analisy| analisy.skip_validate == 'true' }
-  validates :analisy_technic_user_ids, presence: true, :unless => Proc.new { |analisy| analisy.skip_validate == 'true' }
 
   before_save :create_log
 
@@ -75,10 +74,8 @@ class Analisy < ApplicationRecord
     return analisy_headtest_user_ids.present?
   end
   def analisy_technics_exists?
-    if analisy_technic_user_ids.present?
-      analisy_technic_user_ids.each do | user_id |
-        self.analisy_technic_user_ids.delete(user_id) unless User.technics.pluck(:id).include?( user_id )
-      end
+    analisy_technic_user_ids.each do | user_id |
+      self.analisy_technic_user_ids.delete(user_id) unless User.technics.pluck(:id).include?( user_id )
     end
     return analisy_technic_user_ids.present?
   end
