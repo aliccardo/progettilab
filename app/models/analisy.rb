@@ -5,9 +5,9 @@ class Analisy < ApplicationRecord
   has_one    :report, -> { issued }, :class_name => 'Report', dependent: :destroy
   has_many   :results, :class_name => "AnalisyResult", :foreign_key => "analisy_id"
   has_many   :nuclides, :through => :results, source: :nuclide
- 
+
   has_many :reports, through: :results, source: :reports
-  
+
   has_many :roles, -> { order role: :asc }, :class_name => "AnalisyUser", :foreign_key => "analisy_id"
   has_many :analisy_technics, -> { where role: 'technic' }, :class_name => "AnalisyUser", :foreign_key => "analisy_id", before_add: [Proc.new {|p,d| d.role = 2} ]
   has_many :analisy_headtests, -> { where role: 'headtest' }, :class_name => "AnalisyUser", :foreign_key => "analisy_id", before_add: [Proc.new {|p,d| d.role = 1} ]
@@ -20,7 +20,7 @@ class Analisy < ApplicationRecord
   accepts_nested_attributes_for :analisy_chief_users, reject_if: lambda { |user| user[:_destroy].blank? && user[:id].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :analisy_headtest_users, reject_if: lambda { |user| user[:_destroy].blank? && user[:id].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :analisy_technic_users, reject_if: lambda { |user| user[:_destroy].blank? && user[:id].blank? }, :allow_destroy => true
-  
+
   accepts_nested_attributes_for :results, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :reports, reject_if: :all_blank, allow_destroy: true
 
@@ -33,7 +33,7 @@ class Analisy < ApplicationRecord
 
   validates :analisy_type_id, presence: true, uniqueness: { :scope => :sample_id }
   validates :reference_at, presence: true, date: true
-  
+
   validates :analisy_chief_user_ids, presence: true, :unless => Proc.new { |analisy| analisy.skip_validate == 'true' }
   validates :analisy_headtest_user_ids, presence: true, :unless => Proc.new { |analisy| analisy.skip_validate == 'true' }
   validates :analisy_technic_user_ids, presence: true, :unless => Proc.new { |analisy| analisy.skip_validate == 'true' }

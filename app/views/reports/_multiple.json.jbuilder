@@ -33,10 +33,10 @@ json.readable can?(:read, result)
 json.editable can?(:update, result)
 json.deletable can?(:destroy, result)
 json.creable can?(:create, Report)
-json.valid? ( 
-              result.analisy.valid? && 
-              result.sample.valid? && 
-              result.analisy.valid? && 
+json.valid? (
+              result.analisy.valid? &&
+              result.sample.valid? &&
+              result.analisy.valid? &&
               result.valid? &&
               result.analisy.analisy_chief_users.map{ |u| u.label if User.chiefs.pluck(:id).include?( u.id ) }.compact.present? && 
               result.analisy.analisy_headtest_users.map{ |u| u.label if User.headtests.pluck(:id).include?( u.id ) }.compact.present? &&

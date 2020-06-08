@@ -42,13 +42,12 @@ json.readable can?(:read, analisy)
 json.editable can?(:update, analisy)
 json.deletable can?(:destroy, analisy)
 json.creable can?(:create, Report)
-json.valid? ( 
-              analisy.job.valid? && 
-              analisy.sample.valid? && 
-              analisy.valid? && 
-              analisy.analisy_chief_users.map{ |u| u.label if User.chiefs.pluck(:id).include?( u.id ) }.compact.present? && 
-              analisy.analisy_headtest_users.map{ |u| u.label if User.headtests.pluck(:id).include?( u.id ) }.compact.present? &&
-              analisy.analisy_technic_users.map{ |u| u.label if User.technics.pluck(:id).include?( u.id ) }.compact.present?
+json.valid? (
+              analisy.job.valid? &&
+              analisy.sample.valid? &&
+              analisy.valid? &&
+              analisy.analisy_chief_users.map{ |u| u.label if User.chiefs.pluck(:id).include?( u.id ) }.compact.present? &&
+              analisy.analisy_headtest_users.map{ |u| u.label if User.headtests.pluck(:id).include?( u.id ) }.compact.present?
             )
 json.has_reports? analisy.reports.issued.present?
 json.report_code analisy.reports.issued.present? ? analisy.reports.issued.first.code : ''
