@@ -97,12 +97,12 @@ module Single
 		text_box I18n.t('results', scope: 'reports.fields', default: 'Results').upcase, :size => label_size, :at => [left, cursor]
 		results = @analisy.results.join("\r\n").force_encoding("UTF-8")
 		stroke_rectangle [ left+60, cursor+5 ], bounds.width-65, 130
-		formatted_text_box result_to_report( @report.analisy.results.map{ |r| r.doc_rif_int.present? ? "#{r.full_result_with_nuclide} (Doc.Rif.Int. #{ r.doc_rif_int })" : r.full_result_with_nuclide }.join("\n\r") ), { :size => text_size, :at => [left+65, cursor] }
+		formatted_text_box result_to_report( @report.analisy.results.map{ |r| r.doc_rif_int.present? ? "#{r.full_result_with_nuclide} (Doc.Rif.Int. #{ r.doc_rif_int })" : r.full_result_with_nuclide }.join("\r\n") ), { :size => text_size, :at => [left+65, cursor] }
 
 		move_down(140)
 		text_box I18n.t('body', scope: 'reports.fields', default: 'Note').upcase, :size => label_size, :at => [left, cursor]
 		stroke_rectangle [ left+60, cursor+5 ], bounds.width-65, 140
-		text_box "#{@report.sample.body}\n\r#{@report.results.map{ |r| "#{ r.info }\n\r#{ r.body }"  }.join('\n\r') }", :size => text_size-1, :at => [left+65, cursor]
+		text_box "#{@report.results.map{ |r| "#{ r.info }\r\n#{ r.body }"  }.join("\r\n") }", :size => text_size-1, :at => [left+65, cursor]
 
 		move_down(150)
 		text_box I18n.t('technicians', scope: 'reports.fields', default: "Laboratory technician").upcase, :size => label_size, :at => [left, cursor]
