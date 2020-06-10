@@ -56,13 +56,21 @@
               if full['editable']
                 v = v + "<a class='auto cell button transparent' href='#{ full['url'] }/<%= I18n.t('edit', scope: 'routes', default: 'edit') %>' title='<%= I18n.t('title', scope: 'jobs.update', default: 'Edit job') %>'><i class='fa fa-edit'></i></a>"
               else if full['readable']
-                v = v + "<a class='button transparent' href='#{ full['url'] }'><i class='fa fa-eye'></i></a>"
+                v = v + "<a class='auto cell button transparent' href='#{ full['url'] }'><i class='fa fa-eye'></i></a>"
+              else
+                v = v + "<a class='auto cell button disabled transparent'><i class='fa fa-eye-slash'></i></a>"
               if full['openable']
                 v = v + "<a class='auto cell button transparent reveal-modal-mini' href='#{ full['url'] }/<%= I18n.t('reopen', scope: 'routes', default: 'reopen') %>?url=#{window.location.href}' data-url='#{ full['url'] }/<%= I18n.t('reopen', scope: 'routes', default: 'reopen') %>?modal=1&url=#{window.location.href}' title='<%= I18n.t('title', scope: 'jobs.reopen', default: 'Reopen job') %>'><i class='fa fa-unlock'></i></a>"
+              else
+                v = v + "<a class='auto cell button disabled transparent'><i class='fa fa-unlock'></i></a>"
               if full['printable']
                 v = v + "<a class='auto cell button transparent reveal-modal-mini' href='#{ full['url'] }/<%= I18n.t('print', scope: 'routes', default: 'print') %>' data-url='#{ full['url'] }/<%= I18n.t('print', scope: 'routes', default: 'print') %>?modal=1' title='<%= I18n.t('title', scope: 'jobs.print', default: 'Print job') %>'><i class='fa fa-print'></i></a>"
+              else
+                v = v + "<a class='auto cell button disabled transparent'><i class='fa fa-print'></i></a>"
               if full['deletable']
                 v = v + "<a class='auto cell button transparent' href='#{ full['url'] }' data-method='delete' data-confirm='<%= I18n.t('delete', scope: 'confirmations', default: 'The deleted data can not be recovered. If you confirm, all data, connected to it, will be deleted. Are you sure?' ) %>'><i class='fa fa-trash'></i></a>"
+              else
+                v = v + "<a class='auto cell button disabled transparent'><i class='fa fa-trash'></i></a>"
               v = v + '</div>'
             return v
         }
