@@ -10,7 +10,8 @@
             - unless @menu.blank?
               - @menu.compact.each do |menu|
                 %li.divider
-                %li= link_to( fa_icon(menu[:fa], text: menu[:text], title: menu[:title]), menu[:to], remote: menu[:remote], class: menu[:class], target: menu[:target])
+                %li= link_to( fa_icon(menu[:fa], text: menu[:text], title: menu[:title]), menu[:to], remote: menu[:remote], class: menu[:class], target: menu[:target],
+                              'data-close': ( ( menu[:remote] ).blank? ) ? '' : 'no-close' )
             %li
               %button.close-button{ data: { close: true }, aria: {label: 'Close modal' }, type: 'button' }
                 %span{ aria: {hidden: true } } &times;
