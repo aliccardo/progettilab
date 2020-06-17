@@ -142,6 +142,8 @@
           'class': 'grid-container full text-right'
           'mRender': ( data, type, full ) ->
             v = ''
+            if section == 'notissued' && report_type == 'single' && ! full['has_reports?']
+              v +=  "<a class='button transparent' title='Anteprima' href='#{ full['analisy']['preview_url'] }' target='_blank'><i class='fa fa-arrow-circle-o-down fa-lg'></i></a>"
             if section != 'notissued'
               if full['url'] == ''
                 v += "<a class='button transparent disabled' title='File non disponibile' href='#{ full['url'] }' target='_blank'><i class='fa fa-download'></i></a>"

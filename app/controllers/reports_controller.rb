@@ -35,6 +35,33 @@ class ReportsController < ApplicationController
     end
   end
 
+  def preview
+    Rails.logger.debug 'Creo qui la preview'
+    @section = params[:section] || 'none'
+    @report_type = params[:report_type]
+    Rails.logger.debug "@report_type -> #{@report_type}"
+    Rails.logger.debug "@section -> #{@section}"
+    if @report_type == 'multiple'
+      Rails.logger.debug "params[:f] ->#{params[:f]}"
+      file_name = "#{Rails.root}/private#{params[:f]}".rpartition('?').first
+      Rails.logger.debug "file_name ->#{file_name}"
+      if File.exists?(file_name)
+        send_file file_name, filename: File.basename(file_name), type: 'application/pdf'
+      else
+        render :file => "#{Rails.root}/public/file_not_found.html", :status => 500, :layout => false
+      end
+    elsif  @report_type == 'single'
+      report = report_preview
+      Rails.logger.debug "report.file -> #{report.file.inspect}"
+      Rails.logger.debug "report.file.path -> #{report.file.path.inspect}"
+      if File.exists?(report.file.path)
+        send_file report.file.path, filename: report.file_file_name, type: 'application/pdf'
+      else
+        render :file => "#{Rails.root}/public/file_not_found.html", :status => 500, :layout => false
+      end
+    end
+  end
+
   def delete
     @section = 'issued'
     if params[:modal] == "1"
@@ -50,53 +77,71 @@ class ReportsController < ApplicationController
   # POST /reports
   # POST /reports.json
   def create
+    Rails.logger.debug 'Creo qui la stampa'
     @error_ids = []
     @error_messages = []
     @report_type = report_params[:type]
     @section = params[:section]
-    respond_to do |format|
-      if @report_type == 'single'
-        analisy_ids = report_params[:analisy_ids]
-        if analisy_ids.present?
-          analisy_ids.each do | analisy_id |
-            analisy_id = analisy_id.try(:to_i)
+    if @report_type == 'multiple' && params.key?("preview")
+      report = report_preview
+      if File.exists?(report.file.path)
+        Rails.logger.debug "report.file.url ->#{report.file.url}"
+        @report_url = report.file.url
+      else
+        render :file => "#{Rails.root}/public/file_not_found.html", :status => 500, :layout => false
+      end
+    else
+      respond_to do |format|
+        if @report_type == 'single'
+          Rails.logger.debug 'Qui la singola'
+          analisy_ids = report_params[:analisy_ids]
+          if analisy_ids.present?
+            analisy_ids.each do | analisy_id |
+              analisy_id = analisy_id.try(:to_i)
+              report = @job.reports.new
+              report.analisy_id = analisy_id
+              report.author = current_user.label
+              report.report_type = @report_type
+              report.result_ids = @job.analisies.find( analisy_id ).result_ids
+              report.save
+              if report.errors.present?
+                @error_ids << analisy_id
+                @error_messages << report.errors.full_messages.join(', ')
+              end
+              sleep(1.seconds)
+            end
+          end
+        elsif @report_type == 'multiple'
+          Rails.logger.debug 'Qui la multipla'
+          Rails.logger.debug "params -> #{params.inspect}"
+          Rails.logger.debug "report_params ->#{report_params.inspect}"
+          result_ids = report_params[:result_ids]
+          Rails.logger.debug "result_ids ->#{result_ids.inspect}"
+          if result_ids.present?
             report = @job.reports.new
-            report.analisy_id = analisy_id
+            report.result_ids = result_ids
             report.author = current_user.label
             report.report_type = @report_type
-            report.result_ids = @job.analisies.find( analisy_id ).result_ids
-            report.save
-            if report.errors.present?
-              @error_ids << analisy_id
+            report.general_body = report_params[:general_body] || ''
+            unless report.save
+              @error_ids << result_ids
               @error_messages << report.errors.full_messages.join(', ')
             end
-            sleep(1.seconds)
           end
         end
-      elsif @report_type == 'multiple'
-        result_ids = report_params[:result_ids]
-        if result_ids.present?
-          report = @job.reports.new
-          report.result_ids = result_ids
-          report.author = current_user.label
-          report.report_type = @report_type
-          report.general_body = report_params[:general_body] || ''
-          unless report.save
-            @error_ids << result_ids
-            @error_messages << report.errors.full_messages.join(', ')
-          end
+        Rails.logger.debug 'Passo di qui dopo la stampa'
+        if @error_ids.blank?
+          format.html { redirect_to job_reports_path(report_type: @report_type), notice: 'Report was successfully created.' }
+          format.json { render :show, status: :created, location: @report }
+          format.js
+        else
+          format.html { render :new }
+          format.json { render json: @error_ids, status: :unprocessable_entity }
+          format.js
         end
       end
-      if @error_ids.blank?
-        format.html { redirect_to job_reports_path(report_type: @report_type), notice: 'Report was successfully created.' }
-        format.json { render :show, status: :created, location: @report }
-        format.js
-      else
-        format.html { render :new }
-        format.json { render json: @error_ids, status: :unprocessable_entity }
-        format.js
-      end
-   end
+    end
+    Rails.logger.debug 'La creazione della stampa termina qui.'
   end
 
   # PATCH/PUT /reports/1
@@ -140,6 +185,38 @@ class ReportsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_report
       @report = Report.find_by(job_id: params[:job_id], id: params[:id])
+    end
+
+    def report_preview
+      Rails.logger.debug 'report_preview'
+      report = nil
+      if @report_type == 'single'
+        analisy_id = params[:id]
+        Rails.logger.debug "@analisy_id -> #{analisy_id}"
+        Rails.logger.debug 'Qui la preview singola'
+        if analisy_id.present?
+          analisy_id = analisy_id.try(:to_i)
+          report = @job.reports.new
+          report.analisy_id = analisy_id
+          report.author = current_user.label
+          report.report_type = @report_type
+          report.result_ids = @job.analisies.find( analisy_id ).result_ids
+          report.preview_pdf
+          sleep(1.seconds)
+        end
+      elsif @report_type == 'multiple'
+        Rails.logger.debug 'Qui la multipla'
+        result_ids = report_params[:result_ids]
+        if result_ids.present?
+          report = @job.reports.new
+          report.result_ids = result_ids
+          report.author = current_user.label
+          report.report_type = @report_type
+          report.general_body = report_params[:general_body] || ''
+          report.preview_pdf
+        end
+      end
+      return report
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

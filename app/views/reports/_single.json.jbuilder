@@ -26,6 +26,7 @@ json.analisy do
                     analisy.analisy_headtest_users.map{ |u| u.label if User.headtests.pluck(:id).include?( u.id ) }.compact.present?
                   )
   json.url        edit_job_sample_analisy_url(job_id: analisy.job.id, sample_id: analisy.sample.id, id: analisy.id)
+  json.preview_url preview_job_report_path(job_id: analisy.job.id, id: analisy.id, report_type: 'single')
 end
 json.results  analisy.results.each do | result |
   json.id         result.id

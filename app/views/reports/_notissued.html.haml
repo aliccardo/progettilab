@@ -24,6 +24,13 @@
         %tfooter
 
       - if can?( :create, Report )
-        = f.submit_button value: 'Emetti rapporti di prova selezionati', options: { content: 'false' }, confirm: 'Confermi creazione rapporti di prova?'
+        - if @report_type == 'multiple'
+          .grid-x.grid-padding-x.text-center
+            .cell.small-6
+              = f.submit_button icon: 'arrow-circle-o-down fa-lg', value: 'Anteprima dei rapporti di prova selezionati', options: { content: 'true', button_class: 'secondary', name: 'preview'}
+            .cell.small-6
+              = f.submit_button value: 'Emetti rapporti di prova selezionati', options: { content: 'false' }, confirm: 'Confermi creazione rapporti di prova?'
+        - else
+          = f.submit_button value: 'Emetti rapporti di prova selezionati', options: { content: 'false' }, confirm: 'Confermi creazione rapporti di prova?'
 - else
   .callout.alert.text-center.text-upcase Non sei autorizzato ad emettere i rapporti di prova

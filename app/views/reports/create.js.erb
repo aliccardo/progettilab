@@ -2,12 +2,16 @@
   <% @error_ids.each do |id| %>
     $("#tr_<%= id %>").addClass('invalid').children('td:first-child').append("<i class='fa fa-exclamation-circle text-alert help' title='Si è verificato il seguente errore durante la creazione del report!'></i>");
   <% end %>
-  
+
 <% else %>
   $('#reports').html("<%= escape_javascript(render 'notissued')%>");
   $('#menubar').html("<%= escape_javascript( render 'menubar' ) %>");
   $( document ).ready(function() {
     reports_table();
-    alert('Rapporti emessi!');
-  });
+    <% unless @report_url.blank? %>
+      window.open("<%= preview_job_report_path(job_id: @job.id, id: 0, report_type: 'multiple') %>?f=<%= @report_url %>", "_blank");
+    <% else %>
+      alert('Rapporti emessi!');
+    <% end %>
+    });
 <% end %>

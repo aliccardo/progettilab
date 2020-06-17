@@ -71,6 +71,7 @@ Rails.application.routes.draw do
         resources :analisies, only: [:index]
         resources :reports, only: [:index, :create, :delete, :destroy] do
           get '(/:section)(/:report_type)', on: :collection, to: 'reports#index', section: /issued|notissued|cancelled/, report_type: /single|multiple/, as: :filtered
+          get '(/:section)(/:report_type)/preview', on: :member , to: 'reports#preview', section: /notissued/, report_type: /single|multiple/, as: :preview
           get :download, on: :member, to: 'reports#download', as: :download, defaults: { format: :pdf }, constraints: { format: :pdf }
           get :delete, on: :member, to: 'reports#delete', as: :delete
 
