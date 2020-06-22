@@ -56,15 +56,22 @@ class AnalisyResult < ApplicationRecord
 
   def set_results
     mcr_text = (mcr.blank?)? '':  "; MCR=#{mcr} #{mcr_unit.html unless mcr_unit_id.blank?}"
-    Rails.logger.debug "mcr è: #{mcr_text}."
-    Rails.logger.debug "result è: #{result}."
+    Rails.logger.debug "mcr ->#{mcr_text}"
+    Rails.logger.debug "result ->#{result}"
+    Rails.logger.debug "indecision ->#{indecision}"
+    Rails.logger.debug "result_before_type_cast ->#{result_before_type_cast}"
+    Rails.logger.debug "indecision_before_type_cast ->#{indecision_before_type_cast}"
+    self.result_precision = set_precision result_before_type_cast
+    self.indecision_precision = set_precision indecision_before_type_cast
+    Rails.logger.debug "self.result_precision ->#{self.result_precision}"
+    Rails.logger.debug "self.indecision_precision->#{self.indecision_precision}"
     self.full_result = unless result.blank?
       Rails.logger.debug "symbol è: #{symbol}."
       case symbol
         when "±"
-          "#{result} #{result_unit.html unless result_unit_id.blank?} #{symbol} #{indecision} #{indecision_unit.html unless result_unit_id.blank?}#{mcr_text unless mcr_text.blank? }"
+          "#{result_full_decimal} #{result_unit.html unless result_unit_id.blank?} #{symbol} #{indecision_full_decimal} #{indecision_unit.html unless result_unit_id.blank?}#{mcr_text unless mcr_text.blank? }"
         when "<"
-          "#{symbol} #{result} #{result_unit.html unless result_unit_id.blank?}#{mcr_text unless mcr_text.blank? }"
+          "#{symbol} #{result_full_decimal} #{result_unit.html unless result_unit_id.blank?}#{mcr_text unless mcr_text.blank? }"
         else
           (mcr_text.blank?)? 'n.d.': mcr_text[2..mcr_text.size]
       end
@@ -108,17 +115,27 @@ class AnalisyResult < ApplicationRecord
     self.full_result_with_nuclide = text
   end
 
+  def result_full_decimal
+    value_full_decimal result, result_precision unless result.nil?
+  end
+
+  def indecision_full_decimal
+    value_full_decimal indecision, indecision_precision  unless result.nil?
+  end
+
   private
 
   def prerequisite
     if new_record? && import.blank?
       self.full_result = 'n.d.'
     else
-      Rails.logger.debug "absence_analysis è presente: #{absence_analysis.present?}."
+      Rails.logger.debug "absence_analysis è presente? #{absence_analysis.present?}."
       if absence_analysis.present?
         self.result = ''
+        self.result_precision = nil
         self.result_unit_id = :null
         self.indecision = ''
+        self.indecision_precision = nil
         self.indecision_unit_id = :null
         self.mcr = ''
         self.mcr_unit_id = :null
@@ -126,9 +143,9 @@ class AnalisyResult < ApplicationRecord
         self.absent = true
         self.full_result = absence_analysis
       else
-        errors.add :result, 'campo obbligatorio, se MCR è vuoto' if result.blank? && mcr.blank?
+        errors.add :result_full_decimal, 'campo obbligatorio, se MCR è vuoto' if result.blank? && mcr.blank?
         errors.add :result_unit_id, 'campo obbligatorio, se MCR è vuoto' if result_unit_id.blank? && mcr.blank?
-        errors.add :indecision, 'campo obbligatorio, se MCR è vuoto' if symbol == '±' && indecision.blank? && mcr.blank?
+        errors.add :indecision_full_decimal, 'campo obbligatorio, se MCR è vuoto' if symbol == '±' && indecision.blank? && mcr.blank?
         errors.add :indecision_unit_id, 'campo obbligatorio, se MCR è vuoto' if symbol == '±' && indecision_unit_id.blank? && mcr.blank?
         errors.add :mcr_unit_id, 'campo obbligatorio, se MCR ha un valore' if mcr_unit_id.blank? && mcr.present?
         if errors.blank?
@@ -141,5 +158,15 @@ class AnalisyResult < ApplicationRecord
     end
     for_report
     self.author = analisy.try(:author) || 'System'
+  end
+
+  def set_precision(text)
+    (text.include?('.') && ! text.end_with?('.'))? text.split('.').last.length : 0
+  end
+
+  def value_full_decimal(x, x_precision)
+    x_parts  = x.to_s.split '.'
+    x_precision ||= x_parts.last.length
+    "#{x_parts.first}.#{(x_parts.last + ('0' * x_precision))[0...x_precision]}"
   end
 end
