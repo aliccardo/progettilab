@@ -27,7 +27,7 @@ class AnalisiesController < ApplicationController
       format.html do
         if params[:modal] == "1"
           @analisies = @analisies.page( params[:page] ).per(5)
-          @icon = ("<i class='fa fa-eyw'></i> ")
+          @icon = ("<i class='fa fa-eye'></i> ")
           @title = "#{t('show', scope: '', default: 'Show')}"
           render layout: 'modal'
         else
@@ -50,7 +50,7 @@ class AnalisiesController < ApplicationController
       format.html do
         if params[:modal] == "1"
           @modal = params[:modal]
-          @icon = ("<i class='fa fa-eyw'></i> ")
+          @icon = ("<i class='fa fa-eye'></i> ")
           @title = "#{t('title', scope: 'analisies.show', default: 'Show')}"
           render layout: 'modal'
         end
