@@ -780,7 +780,7 @@ it:
       device: 'Chiave dati-programma'
       analisy_type: 'Tipologia di analisi'
       results: 'Risultati'
-      body: 'Note'
+      body: 'Descrizione'
       attachments: 'Allegati'
       technician: 'Tecnico di laboratorio'
       technicians: 'Tecnici di laboratorio'

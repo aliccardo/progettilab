@@ -102,7 +102,7 @@ module Single
 		move_down(140)
 		text_box I18n.t('body', scope: 'reports.fields', default: 'Note').upcase, :size => label_size, :at => [left, cursor]
 		stroke_rectangle [ left+60, cursor+5 ], bounds.width-65, 140
-		text_box "#{@report.results.map{ |r| "#{ r.info }\r\n#{ r.body }"  }.join("\r\n") }", :size => text_size-1, :at => [left+65, cursor]
+		text_box "#{@report.analisy.note}#{"\r\n" if @report.analisy.note.present?}#{@report.results.map{ |r| "#{ r.info }\r\n#{ r.body }"  }.join("\r\n") }", :size => text_size-1, :at => [left+65, cursor]
 
 		move_down(150)
 		text_box I18n.t('technicians', scope: 'reports.fields', default: "Laboratory technician").upcase, :size => label_size, :at => [left, cursor]

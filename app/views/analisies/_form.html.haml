@@ -1,33 +1,34 @@
 = form_with model: @analisy, url: [@job, @sample, @analisy], :builder => ExtraFormWith do |f|
-	%h6= t('title', scope: 'analisies.show', default: "Analisy details")
-	.grid-y
-		.cell.grid-x.grid-padding-x
-			.small-12.medium-6.large-6.cell= f.select_field_if ( @analisy_types.size > 1),  :analisy_type_id, @analisy_types, options: { icon: 'list', include_blank: false, placeholder: ( @analisy.type.title if @analisy.analisy_type_id.present? ) }, input_options: { class: 'input-group-field select2' }
-			.small-12.medium-6.large-6.cell= f.date_field :reference_at, icon: 'calendar', autocomplete: 'false'
-		.cell.grid-x.grid-padding-x
-			.small-12.medium-6.large-6.cell= f.textarea :method, autocomplete: "off", icon: 'pencil'
-			.small-12.medium-6.large-6.cell= f.textarea :body, autocomplete: "off", icon: 'pencil'
-		.cell.grid-x.grid-padding-x
-			.small-12.large-3.cell
-				= f.hidden_field :analisy_chief_user_ids, value: @job.chief_id if @analisy.analisy_chief_user_ids.blank?
-				= f.label_field :analisy_chief_user_ids, options: { required: true, placeholder: @job.chief.label, icon: 'user', label: t('chief', scope: 'analisies.fields', default: 'Chief') }
-			.small-12.large-3.cell= f.select_field_if true, :analisy_headtest_user_ids, User.headtests.select(:id, :label).pluck(:label, :id), options: { icon: 'user', include_blank: 'Seleziona uno dei seguenti valori', help:false, required: true }, input_options: { class: "input-group-field #{ 'invalid' if @analisy.persisted? && @analisy.invalid? && @analisy.errors.include?(:analisy_headtests) }", selected: @analisy.analisy_headtest_ids }
-			.small-12.large-6.cell= f.select_field_if true, :analisy_technic_user_ids,  User.technics.pluck(:label, :id), options: { icon: 'users', placeholder: @analisy.analisy_technic_users.pluck(:label).join(', '), required: true }, input_options: { include_blank: false, class: 'select2 input-group-field ', multiple: 'multiple' }
+  %h6= t('title', scope: 'analisies.show', default: "Analisy details")
+  .grid-y
+    .cell.grid-x.grid-padding-x
+      .small-12.medium-6.large-6.cell= f.select_field_if ( @analisy_types.size > 1),  :analisy_type_id, @analisy_types, options: { icon: 'list', include_blank: false, placeholder: ( @analisy.type.title if @analisy.analisy_type_id.present? ) }, input_options: { class: 'input-group-field select2' }
+      .small-12.medium-6.large-6.cell= f.date_field :reference_at, icon: 'calendar', autocomplete: 'false'
+    .cell.grid-x.grid-padding-x
+      .small-12.medium-6.large-6.cell= f.textarea :method, autocomplete: "off", icon: 'pencil'
+      .small-12.medium-6.large-6.cell= f.textarea :body, autocomplete: "off", icon: 'pencil'
+      .small-12.medium-6.large-6.cell= f.textarea :note, autocomplete: "off", icon: 'pencil'
+      .small-12.large-3.cell
+        = f.hidden_field :analisy_chief_user_ids, value: @job.chief_id if @analisy.analisy_chief_user_ids.blank?
+        = f.label_field :analisy_chief_user_ids, options: { required: true, placeholder: @job.chief.label, icon: 'user', label: t('chief', scope: 'analisies.fields', default: 'Chief') }
+      .small-12.large-3.cell= f.select_field_if true, :analisy_headtest_user_ids, User.headtests.select(:id, :label).pluck(:label, :id), options: { icon: 'user', include_blank: 'Seleziona uno dei seguenti valori', help:false, required: true }, input_options: { class: "input-group-field #{ 'invalid' if @analisy.persisted? && @analisy.invalid? && @analisy.errors.include?(:analisy_headtests) }", selected: @analisy.analisy_headtest_ids }
+    .cell.grid-x.grid-padding-x
+      .small-12.large-6.cell= f.select_field_if true, :analisy_technic_user_ids,  User.technics.pluck(:label, :id), options: { icon: 'users', placeholder: @analisy.analisy_technic_users.pluck(:label).join(', '), required: true }, input_options: { include_blank: false, class: 'select2 input-group-field ', multiple: 'multiple' }
 
-	%h6= t('title', scope: 'analisyresults', default: 'Results')
-	%table
-		%thead
-			%tr
-				%th.text-left= t('nuclide', scope: 'analisyresults.fields', default: 'Nuclide')
-				%th.text-center.small-2= t('result', scope: 'analisyresults.fields', default: 'Result')
-				%th.text-center.small-1= t('result_unit', scope: 'analisyresults.fields', default: 'Result unit')
-				%th.text-center.small-1= t('symbol', scope: 'analisyresults.fields', default: 'Symbol')
-				%th.text-center.small-2= t('indecision', scope: 'analisyresults.fields', default: 'Indecision')
-				%th.text-center.small-1= t('indecision_unit', scope: 'analisyresults.fields', default: 'Indecision unit')
-				%th.text-center.small-1= t('mcr', scope: 'analisyresults.fields', default: 'MCR')
-				%th.text-center.small-1= t('mcr_unit', scope: 'analisyresults.fields', default: 'MCR unit')
-				%th.text-center.small-2= t('absence_analysis', scope: 'analisyresults.fields', default: 'Causa absence analysis')
-		%tbody
-			= f.fields_for :results do |result|
-				= render 'analisy_result_form', f: result
-	.cell= f.submit_button icon: 'save'
+  %h6= t('title', scope: 'analisyresults', default: 'Results')
+  %table
+    %thead
+      %tr
+        %th.text-left= t('nuclide', scope: 'analisyresults.fields', default: 'Nuclide')
+        %th.text-center.small-2= t('result', scope: 'analisyresults.fields', default: 'Result')
+        %th.text-center.small-1= t('result_unit', scope: 'analisyresults.fields', default: 'Result unit')
+        %th.text-center.small-1= t('symbol', scope: 'analisyresults.fields', default: 'Symbol')
+        %th.text-center.small-2= t('indecision', scope: 'analisyresults.fields', default: 'Indecision')
+        %th.text-center.small-1= t('indecision_unit', scope: 'analisyresults.fields', default: 'Indecision unit')
+        %th.text-center.small-1= t('mcr', scope: 'analisyresults.fields', default: 'MCR')
+        %th.text-center.small-1= t('mcr_unit', scope: 'analisyresults.fields', default: 'MCR unit')
+        %th.text-center.small-2= t('absence_analysis', scope: 'analisyresults.fields', default: 'Causa absence analysis')
+    %tbody
+      = f.fields_for :results do |result|
+        = render 'analisy_result_form', f: result
+  .cell= f.submit_button icon: 'save'

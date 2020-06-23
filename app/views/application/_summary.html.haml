@@ -75,6 +75,9 @@
           %label.small-12.large-4.cell= t('body', scope: 'reports.fields', default: 'Note')
           %span.small-12.large-8.cell= analisy.body || '-'
         .grid-x
+          %label.small-12.large-4.cell= t('note', scope: 'reports.fields', default: 'Note')
+          %span.small-12.large-8.cell= analisy.note || '-'
+        .grid-x
           %label.small-12.large-4.cell= t('technicians', scope: 'reports.fields', default: "Laboratory technician")
           %span.small-12.large-8.cell= analisy.analisy_technic_users.blank? ? t('not_inserted', scope: 'reports.fields', default: 'Not found').upcase : analisy.analisy_technic_users.pluck(:label).join(', ')
         .grid-x
