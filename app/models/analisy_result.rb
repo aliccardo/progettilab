@@ -161,6 +161,7 @@ class AnalisyResult < ApplicationRecord
   end
 
   def set_precision(text)
+    return 0 if text.nil?
     (text.include?('.') && ! text.end_with?('.'))? text.split('.').last.length : 0
   end
 
