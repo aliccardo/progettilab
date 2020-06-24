@@ -101,7 +101,9 @@ class SamplesController < ApplicationController
   # POST /samples
   # POST /samples.json
   def create
-    @sample = @job.samples.new(sample_params)
+    @sample = @job.samples.new(sample_params) do |s|
+      s.analisies.each { |a| a.reference_at ||= s.stop_at }
+    end
     @sample.author = current_user.label unless @sample.author.blank?
     @sample.created_by = current_user.label
     @sample.updated_by = current_user.label
