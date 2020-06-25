@@ -44,6 +44,10 @@ class Analisy < ApplicationRecord
 
   scope :created_in, ->(year) { where( "extract(YEAR from created_at ) = ?", year ) }
 
+  def performed_on
+    I18n.l performed_at.to_date if performed_at.present?
+  end
+
   def reference_on
     I18n.l reference_at.to_date if reference_at.present?
   end

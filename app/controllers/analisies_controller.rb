@@ -204,7 +204,7 @@ class AnalisiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def analisy_params
-      params.require(:analisy).permit(:id, :code, :analisy_type_id, :date_at, :reference_at, :method, :results, :body, :note, :skip_validate, :analisy_chief_user_ids, :analisy_headtest_user_ids, analisy_chiefs_attributes: [ :id, :analisy_id, :user_id, :role ], analisy_headtests_attributes: [ :id, :analisy_id, :role, :user_id ], analisy_technics_attributes: [ :id, :analisy_id, :role, :user_id ], analisy_technic_user_ids: [], results_attributes: [ :id, :nuclide_id, :result, :result_unit_id, :symbol, :indecision, :indecision_unit_id, :absence_analysis, :mcr, :mcr_unit_id, :active, :_destroy ], attachments_attributes: [ :title, :body, :category, :file ])
+      params.require(:analisy).permit(:id, :code, :analisy_type_id, :date_at, :performed_at, :reference_at, :method, :results, :body, :note, :skip_validate, :analisy_chief_user_ids, :analisy_headtest_user_ids, analisy_chiefs_attributes: [ :id, :analisy_id, :user_id, :role ], analisy_headtests_attributes: [ :id, :analisy_id, :role, :user_id ], analisy_technics_attributes: [ :id, :analisy_id, :role, :user_id ], analisy_technic_user_ids: [], results_attributes: [ :id, :nuclide_id, :result, :result_unit_id, :symbol, :indecision, :indecision_unit_id, :absence_analysis, :mcr, :mcr_unit_id, :active, :_destroy ], attachments_attributes: [ :title, :body, :category, :file ])
     end
 
 end
