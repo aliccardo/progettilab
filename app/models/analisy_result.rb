@@ -172,6 +172,7 @@ class AnalisyResult < ApplicationRecord
     Rails.logger.debug "AnalisyResult#value_full_decimal: x_precision ->#{x_precision}"
     x_parts  = x.to_s.split '.'
     x_precision ||= x_parts.last.length
-    "#{x_parts.first}.#{(x_parts.last + ('0' * x_precision))[0...x_precision]}"
+    Rails.logger.debug 'AnalisyResult#value_full_decimal ->' + "#{x_parts.first}#{'.' if x_precision > 0}#{(x_parts.last + ('0' * x_precision))[0...x_precision]}"
+    "#{x_parts.first}#{'.' if x_precision > 0}#{(x_parts.last + ('0' * x_precision))[0...x_precision]}"
   end
 end
