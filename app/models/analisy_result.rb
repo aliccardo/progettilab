@@ -56,17 +56,17 @@ class AnalisyResult < ApplicationRecord
 
   def set_results
     mcr_text = (mcr.blank?)? '':  "; MCR=#{mcr} #{mcr_unit.html unless mcr_unit_id.blank?}"
-    Rails.logger.debug "mcr ->#{mcr_text}"
-    Rails.logger.debug "result ->#{result}"
-    Rails.logger.debug "indecision ->#{indecision}"
-    Rails.logger.debug "result_before_type_cast ->#{result_before_type_cast}"
-    Rails.logger.debug "indecision_before_type_cast ->#{indecision_before_type_cast}"
+    Rails.logger.debug "AnalisyResult#set_result: mcr ->#{mcr_text}"
+    Rails.logger.debug "AnalisyResult#set_result: result ->#{result}"
+    Rails.logger.debug "AnalisyResult#set_result: indecision ->#{indecision}"
+    Rails.logger.debug "AnalisyResult#set_result: result_before_type_cast ->#{result_before_type_cast}"
+    Rails.logger.debug "AnalisyResult#set_result: indecision_before_type_cast ->#{indecision_before_type_cast}"
     self.result_precision = set_precision result_before_type_cast
     self.indecision_precision = set_precision indecision_before_type_cast
-    Rails.logger.debug "self.result_precision ->#{self.result_precision}"
-    Rails.logger.debug "self.indecision_precision->#{self.indecision_precision}"
+    Rails.logger.debug "AnalisyResult#set_result: self.result_precision ->#{self.result_precision}"
+    Rails.logger.debug "AnalisyResult#set_result: self.indecision_precision->#{self.indecision_precision}"
     self.full_result = unless result.blank?
-      Rails.logger.debug "symbol è: #{symbol}."
+      Rails.logger.debug "AnalisyResult#set_result: symbol -> #{symbol}."
       case symbol
         when "±"
           "#{result_full_decimal} #{result_unit.html unless result_unit_id.blank?} #{symbol} #{indecision_full_decimal} #{indecision_unit.html unless result_unit_id.blank?}#{mcr_text unless mcr_text.blank? }"
@@ -76,7 +76,7 @@ class AnalisyResult < ApplicationRecord
           (mcr_text.blank?)? 'n.d.': mcr_text[2..mcr_text.size]
       end
     else
-      Rails.logger.debug "ritorno : #{mcr_text[2..mcr_text.size]}."
+      Rails.logger.debug "AnalisyResult#set_result: -> #{mcr_text[2..mcr_text.size]}."
       mcr_text[2..mcr_text.size]
     end
   end
@@ -116,6 +116,8 @@ class AnalisyResult < ApplicationRecord
   end
 
   def result_full_decimal
+    Rails.logger.debug "AnalisyResult#result_full_decimal: result ->#{result}"
+    Rails.logger.debug "AnalisyResult#result_full_decimal: result_precision ->#{result_precision}"
     value_full_decimal result, result_precision unless result.nil?
   end
 
@@ -166,6 +168,8 @@ class AnalisyResult < ApplicationRecord
   end
 
   def value_full_decimal(x, x_precision)
+    Rails.logger.debug "AnalisyResult#value_full_decimal: x ->#{x}"
+    Rails.logger.debug "AnalisyResult#value_full_decimal: x_precision ->#{x_precision}"
     x_parts  = x.to_s.split '.'
     x_precision ||= x_parts.last.length
     "#{x_parts.first}.#{(x_parts.last + ('0' * x_precision))[0...x_precision]}"
