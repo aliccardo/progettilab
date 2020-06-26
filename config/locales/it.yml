@@ -580,7 +580,7 @@ it:
       cod_sample_client: 'Codice cliente'
       start_at: 'Data inizio campionamento'
       stop_at: 'Data fine campionamento'
-      reference_at: 'Data di riferimento'
+      referenced_at: 'Data di riferimento'
       accepted_at: 'Data accettazione'
       conservation: 'Conservazione'
       report: 'Verbale cliente'

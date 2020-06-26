@@ -54,6 +54,10 @@ class Sample < ApplicationRecord
     I18n.l accepted_at.to_date if accepted_at.present?
   end
 
+  def referenced_on
+    I18n.l referenced_at.to_date if referenced_at.present?
+  end
+
   private
 
   def prerequisite
