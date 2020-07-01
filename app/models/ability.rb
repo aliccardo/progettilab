@@ -38,7 +38,7 @@ class Ability
           can :reopen, Job, id: job.id if user.admin? || user.chief? || user.supervisor? || user.jobs_as_manager_ids.include?( job.id )
         end
         cannot [ :destroy ], Job, id: job.reports.pluck(:job_id)
-        cannot [ :update, :destroy ], Sample, id: job.report_sample_ids
+        cannot [ :destroy ], Sample, id: job.report_sample_ids
         cannot [ :update, :destroy ], Analisy, id: job.report_analisy_ids
         cannot [ :update, :destroy ], AnalisyResult, id: job.report_result_ids
 

@@ -7,7 +7,8 @@
 			= f.hidden_field :author, value: current_user.label
 		%td.small-5.field= f.select_field :analisy_type_id, AnalisyType.all.map{ |m| [ m.title, m.id ] }, { include_blank: false, label: 'false' }, { class: 'input-group-field select2' }
 		%td.small-5.results.field= f.select_field :nuclide_ids, Nuclide.all.map{ |m| [ m.title, m.id ] }, { include_blank: false, label: 'false' }, { class: 'input-group-field select2', multiple: 'multiple' }
-		%td.small-1.text-center= link_to_remove_association fa_icon('trash', class: 'button alert radius small expanded'), f
+		- if f.object.id.nil? || f.object.reports.empty?
+			%td.small-1.text-center= link_to_remove_association fa_icon('trash', class: 'button alert radius small expanded'), f
 - else
 	- unless f.object.job.blank?
 		%tr
