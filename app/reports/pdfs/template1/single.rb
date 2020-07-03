@@ -105,7 +105,7 @@ module Single
 		formatted_text_box result_to_report( @report.analisy.results.map{ |r| r.doc_rif_int.present? ? "#{r.full_result_with_nuclide} (Doc.Rif.Int. #{ r.doc_rif_int })" : r.full_result_with_nuclide }.join("\r\n") ), { :size => text_size, :at => [left+65, cursor] }
 
 		move_down(120)
-		text_box I18n.t('body', scope: 'reports.fields', default: 'Note').upcase, :size => label_size, :at => [left, cursor]
+		text_box I18n.t('note', scope: 'reports.fields', default: 'Note').upcase, :size => label_size, :at => [left, cursor]
 		stroke_rectangle [ left+60, cursor+5 ], bounds.width-65, 120
 		text_box "#{@report.analisy.note}#{"\r\n" if @report.analisy.note.present?}#{@report.results.map{ |r| "#{ r.info }\r\n#{ r.body }"  }.join("\r\n") }", :size => text_size-1, :at => [left+65, cursor]
 
