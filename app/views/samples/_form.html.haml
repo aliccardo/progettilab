@@ -11,12 +11,12 @@
               %li= msg
       .cell.grid-x.grid-padding-x
         - if @sample.persisted?
-          .small-12.medium-6.cell= f.label_field :lab_code, options: { icon: 'barcode', placeholder: @sample.lab_code, help_text: "Codice composto dal codice univoco del campione, generato automaticamente dal sistema durante l'inserimento del campione, e il codice di importazione, se presente." }
-        .small-12.medium-6.cell= f.text_field :client_code, autocomplete: "off", icon: 'barcode'
+          .small-12.medium-5.cell= f.label_field :lab_code, options: { icon: 'barcode', placeholder: @sample.lab_code, help_text: "Codice composto dal codice univoco del campione, generato automaticamente dal sistema durante l'inserimento del campione, e il codice di importazione, se presente." }
+        .small-12.medium-2.cell= f.label_field :accepted_at, options: { required: false, placeholder: @sample.accepted_on || l(Date.today), icon: 'calendar' }
+        .small-12.medium-5.cell= f.text_field :client_code, autocomplete: "off", icon: 'barcode'
       .cell.grid-x.grid-padding-x
         .small-12.medium-4.cell= f.date_time_field :start_at, icon: 'calendar', autocomplete: 'false'
         .small-12.medium-4.cell= f.date_time_field :stop_at, icon: 'calendar', autocomplete: 'false'
-        .small-6.medium-2.cell= f.label_field :accepted_at, options: { required: false, placeholder: @sample.accepted_on || l(Date.today), icon: 'calendar' }
         .small-6.medium-2.cell= f.date_time_field :referenced_at, icon: 'calendar', autocomplete: 'false'
       .cell.grid-x.grid-padding-x
         .large-6.cell= f.text_field :latitude, autocomplete: "off", icon: 'map-o', help_text: "espressa in gradi decimali", value: number_with_precision(@sample.latitude, strip_insignificant_zeros: true, precision: 14, separator: '.', delimiter: '' )
