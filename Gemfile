@@ -2,7 +2,11 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
-
+#############################################
+# da contollare se può avanzare in test/prod
+# in dev no perché non ho ldap attivo!
+gem 'rack', '2.0.7'
+##############################################
 gem 'rails', '~> 5.2.0'
 gem 'rails-i18n'
 gem 'pg'
