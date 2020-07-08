@@ -1,4 +1,4 @@
-json.extract! sample, :id, :code, :lab_code, :client_code, :device, :created_by, :updated_by, :referenced_at, :referenced_on, :accepted_at, :accepted_on, :body
+json.extract! sample, :id, :code, :lab_code, :client_code, :device, :created_by, :updated_by, :accepted_at, :accepted_on, :body
 json.type_matrix sample.type_matrix || { title: '' }
 json.job do
   json.code sample.job.code

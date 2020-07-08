@@ -49,9 +49,6 @@
         .grid-x
           %label.small-12.large-4.cell= t('stop_at', scope: 'samples.fields', default: 'Stop at')
           %span.small-12.large-8.cell= sample.stop_on || '-'
-        .grid-x
-          %label.small-12.large-4.cell= t('referenced_at', scope: 'samples.fields', default: 'Referenced at')
-          %span.small-12.large-8.cell= sample.referenced_on || '-'
   - unless analisy.blank?
     #analisy.section
       %fieldset
