@@ -795,6 +795,7 @@ it:
       revision: 'Revisione'
       start_stop_at: 'Inizio/fine campionamento'
       client_code: 'Codice campione cliente'
+      client_report: 'Verbale campione cliente'
       lab_code: 'Codice laboratorio'
       lat: Latitudine
       long: Longitudine
