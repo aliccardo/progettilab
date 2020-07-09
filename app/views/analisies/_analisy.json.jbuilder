@@ -12,6 +12,7 @@ json.sample do
 	json.id analisy.sample.id
 	json.code analisy.sample.code
 	json.lab_code analisy.sample.lab_code
+	json.type_matrix analisy.sample.type_matrix.title
 	json.device analisy.sample.device
 	json.valid? analisy.sample.valid?
   json.url job_sample_path(job_id: analisy.job.id, id: analisy.sample.id)
