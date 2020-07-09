@@ -55,19 +55,18 @@
           'mRender': ( data, type, full ) ->
             v = ''
             if ( !$('html').hasClass('is-reveal-open') )
-              v = "<div class='grid-x grid-margin-x medium-margin-collapse'>"
-              if full['readable']
-                v += "<a class='button transparent' href='#{ full['url'] }'><i class='fa fa-eye'></i></a>"
+              if full['editable']
+                v += "<a class='button transparent reveal-modal' href='#{ full['url'] }/<%= I18n.t('edit', scope: 'routes', default: 'edit') %>' data-url='#{ full['url'] }/<%= I18n.t('edit', scope: 'routes', default: 'edit') %>?modal=1'><i class='fa fa-edit' title='Modifica'></i></a>"
               else
-                if full['editable']
-                  v += "<a class='auto cell button transparent reveal-modal' href='#{ full['url'] }/<%= I18n.t('edit', scope: 'routes', default: 'edit') %>' data-url='#{ full['url'] }/<%= I18n.t('edit', scope: 'routes', default: 'edit') %>?modal=1'><i class='fa fa-edit'></i></a>"
-                if full['deletable']
-                  v += "<a class='auto cell button transparent' href='#{ full['url'] }' data-method='delete' data-remote='true' data-confirm='<%= I18n.t('delete', scope: 'confirmations', default: 'The deleted data can not be recovered. If you confirm, all data, connected to it, will be deleted. Are you sure?' ) %>'><i class='fa fa-trash'></i></a>"
+                v += "<a class='button transparent reveal-modal' href='#{ full['url'] }' data-url='#{ full['url'] }?modal=1'><i class='fa fa-eye' title='Visualizza'></i></a>"
+              if full['deletable']
+                v += "<a class='button transparent' href='#{ full['url'] }' data-method='delete' data-remote='true' data-confirm='<%= I18n.t('delete', scope: 'confirmations', default: 'The deleted data can not be recovered. If you confirm, all data, connected to it, will be deleted. Are you sure?' ) %>'><i class='fa fa-trash' title='Elimina'></i></a>"
+              else
+                v += "<a class='button transparent disabled' disabled='disabled' title='Cancellazione non consentita'><i class='fa fa-trash'></i></a>"
               v += '</div>'
             else
-              v = "<div class='grid-x grid-margin-x medium-margin-collapse'>"
               if full['readable'] || $('html').hasClass('is-reveal-open')
-                v += "<a class='auto cell button transparent' href='#{ full['url'] }?modal=1' data-url='#{ full['url'] }?modal=1' data-remote='true'><i class='fa fa-eye' title='Visualizza dettaglio campione'></i></a>"
+                v += "<a class='button transparent' href='#{ full['url'] }?modal=1' data-url='#{ full['url'] }?modal=1' data-remote='true'><i class='fa fa-eye' title='Visualizza dettaglio campione'></i></a>"
               v += '</div>'
             return v
         }

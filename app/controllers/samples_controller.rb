@@ -182,6 +182,6 @@ class SamplesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sample_params
-      params.fetch(:sample, {}).permit(:id, :job_id, :timetable_id, :device, :client_code, :author_id, :code, :accepted_at, :report, :cod_sample_client, :start_at, :stop_at, :referenced_at, :latitude, :longitude, :category_id, :type_matrix_id, :conservation, :body, :author, :skip_presence, analisies_attributes: [ :id, :code, :sample_id, :analisy_type_id, :date_at, :reference_at, :method, :body, :author, :done, :_destroy, :skip_validate, analisy_chiefs_attributes: [ :id, :user_id ], analisy_headtests_attributes: [ :id, :user_id ], analisy_technic_user_ids: [], nuclide_ids: []  ]  )
+      params.fetch(:sample, {}).permit(:id, :job_id, :timetable_id, :device, :client_code, :author_id, :code, :accepted_at, :report, :cod_sample_client, :start_at, :stop_at, :reference_at, :latitude, :longitude, :category_id, :type_matrix_id, :conservation, :body, :author, :skip_presence, analisies_attributes: [ :id, :code, :sample_id, :analisy_type_id, :date_at, :reference_at, :method, :body, :author, :done, :_destroy, :skip_validate, analisy_chiefs_attributes: [ :id, :user_id ], analisy_headtests_attributes: [ :id, :user_id ], analisy_technic_user_ids: [], nuclide_ids: []  ]  )
     end
 end
