@@ -105,6 +105,13 @@ module Single
 		stroke_rectangle [ rect_left, cursor+5 ], rect_width, 20
 		text_box "#{@report.analisy.type.title}", :size => text_size, :at => [field_left, cursor]
 
+		if @report.analisy.type.id == 1 # analisy_type.title == 'Concentrazione di attività di radon in aria (SSNTD\'s)'
+			move_down(25)
+			text_box 'Metodo di misura'.upcase, :size => label_size, :at => [left, cursor]
+			stroke_rectangle [ rect_left, cursor+5 ], rect_width, 20
+			text_box '(ad integrazione)', :size => text_size, :at => [field_left, cursor]
+		end
+
 		move_down(25)
 		text_box I18n.t('results', scope: 'reports.fields', default: 'Results').upcase, :size => label_size, :at => [left, cursor]
 		results = @analisy.results.join("\r\n").force_encoding("UTF-8")

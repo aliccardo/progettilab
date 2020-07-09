@@ -70,7 +70,7 @@ def header
 
     label_size = @fontsize
     text_size = @fontsize-0.5
-    bounding_box [bounds.left, cursor ], :width  => bounds.width, :height => 60 do
+    bounding_box [bounds.left, cursor ], :width  => bounds.width, :height => 60 + (@analisy_type_id == 1 ? 20 : 0) do
       move_down(10)
       text_box "ID RAPPORTO", :size => text_size, :at => [left+20, cursor], style: :bold
       text_box "#{ @report.code }", :size => text_size, :at => [left+80, cursor]
@@ -87,6 +87,11 @@ def header
       move_down(20)
       text_box "TIPOLOGIA ANALISI", :size => text_size, :at => [left+20, cursor], style: :bold
       text_box "#{@analisy_type}", :size => text_size, :at => [left+120, cursor]
+      if @analisy_type_id.to_s == '1' # analisy_type.title == 'Concentrazione di attività di radon in aria (SSNTD\'s)'
+        move_down(20)
+        text_box 'METODO DI MISURA', :size => text_size, :at => [left+20, cursor], style: :bold
+        text_box '(ad integrazione)', :size => text_size, :at => [left+120, cursor]
+      end
       stroke do
         line = horizontal_line 0, bounds.width, :at => 0
       end
@@ -158,7 +163,7 @@ def write_page( result )
     header
 		unless @rows.blank?
 	    canvas do
-	    	move_down 150
+	    	move_down 150 + (@analisy_type_id == 1 ? 20 : 0)
 		    table(@rows, width: bounds.width, header: true, row_colors: ['e6e6e6', 'ffffff'], :cell_style => { :size => 8, inline_format: true } ) do
 		      row(0).style :font_style => :bold
 		      column(0).style align: :center, width: 60
