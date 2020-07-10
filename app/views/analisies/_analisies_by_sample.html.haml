@@ -1,0 +1,17 @@
+%h1="SONO IO!"
+%h4.text-center= t("breadcrumbs.analisies.index")
+#analisies.section
+	%fieldset
+		%legend=# t('title', scope: 'analisies.index', default: "Analisies list")
+		%table#analisies-table.display.responsive{ data: { url: job_sample_url(job_id: @job.id, id: @sample.id, format: :json), button: "false" } }
+			%thead
+				%tr
+					%th.small-1{ data: { searchable: "false", orderable: "false" } }
+					%th{ style: 'width:150px;', data: { searchable: "false" } }= t('sample_code', scope: 'analisies.fields', default: 'Lab.code')
+					%th.text-center{ style: 'width:150px;' }= t('code', scope: 'analisies.fields', default: 'Sample Code')
+					%th.hide{ data: { visible: "false", searchable: "false" } }= t('revision', scope: 'analisies.fields', default: 'Report revision')
+					%th.text-left= t('type_matrix', scope: 'samples.fields', default: '2nd level matrix')
+					%th.hide{ data: { visible: "false", searchable: "false" } }= t('method', scope: 'analisies.fields', default: 'Method')
+					%th{ data: { orderable: "false" } }= t('results', scope: 'analisies.fields', default: 'Results')
+					%th{ style: 'width:100px;', data: { orderable: "false" } }
+			%tbody

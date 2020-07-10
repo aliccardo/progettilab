@@ -50,6 +50,7 @@ class SamplesController < ApplicationController
   # GET /samples/1.json
   def show
     @modal = params[:modal]
+    @draw = params[:draw] || 1
     respond_to do |format|
       format.html do
         if params[:modal] == "1"
@@ -61,6 +62,7 @@ class SamplesController < ApplicationController
         add_breadcrumb "<i class='fa fa-table'> #{I18n.t("breadcrumbs.samples.show")}</i>".html_safe
       end
       format.js
+      format.json { render 'show_by_sample' }
     end
   end
 
