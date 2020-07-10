@@ -158,30 +158,45 @@ end
 
 def write_page( result )
 	# if @chief != result.chief || @headtest != result.headtest || @technics != result.technic
-  	start_new_page( :size => 'A4', :layout => :landscape )
+	per_page = 10
+	table_header = @rows.shift
+	for page in (1..rows_pages(@rows, per_page)) do
+		start_new_page( :size => 'A4', :layout => :landscape )
 		font "OpenSans"
     header
-		unless @rows.blank?
-	    canvas do
-	    	move_down 150 + (@analisy_type_id == 1 ? 20 : 0)
-		    table(@rows, width: bounds.width, header: true, row_colors: ['e6e6e6', 'ffffff'], :cell_style => { :size => 8, inline_format: true } ) do
-		      row(0).style :font_style => :bold
-		      column(0).style align: :center, width: 60
-		      column(1).style align: :center, width: 80
-		      column(2).style align: :center, width: 80
-		      column(3).style align: :center, width: 80
-		      column(4).style align: :left, width: 180, inline_format: true
-		      column(5).style align: :left, inline_format: true
-		    end
-		  end
-		end
-	  footer
-	  @rows = []
-	  initialization( result ) unless result.blank?
+    # remove the first rows that are headers
+    lines = paginate_rows(@rows, page, per_page) 
+    lines.unshift table_header
+    unless lines.blank?
+      canvas do
+        move_down 150 + (@analisy_type_id == 1 ? 20 : 0)
+          table(lines, width: bounds.width, header: true, row_colors: ['e6e6e6', 'ffffff'], :cell_style => { :size => 8 - (@analisy_type_id == 1 ? 1 : 0), inline_format: true } ) do
+          row(0).style :font_style => :bold
+          column(0).style align: :center, width: 60
+          column(1).style align: :center, width: 80
+          column(2).style align: :center, width: 80
+          column(3).style align: :center, width: 80
+          column(4).style align: :left, width: 180, inline_format: true
+          column(5).style align: :left, inline_format: true
+        end
+      end
+    end
+    footer
+  end
+  @rows = []
+  initialization( result ) unless result.blank?
   # end
-
 end
 
 def result_to_report( string )
   return Prawn::Text::Formatted::Parser.format( string )
+end
+
+def paginate_rows(rows, page, per_page)
+  rows[((page - 1) * per_page)...(page * per_page)]
+end
+
+def rows_pages(rows, per_page)
+  full_pages, remains = rows.size.divmod per_page
+  full_pages + (remains.zero? ? 0 : 1)
 end
