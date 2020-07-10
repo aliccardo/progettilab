@@ -80,6 +80,6 @@
         $('table#jobs-table').find('.disabled').on 'click', ->
           return false
         return
-      'order': [ [ 0, 'asc' ] ]
+      'order': [ [ 4, 'desc' ] ]
       'language': { "url": "<%= asset_path( ( I18n.locale || I18n.default_locale ).to_s + '.json') %>" }
     return
