@@ -139,9 +139,7 @@ module Single
 		text_box "#{@report.analisy.analisy_chief_users.pluck(:label).join(', ')}", :size => text_size, :at => [field_left, cursor]
 
 		# Footer
-    if @report.analisy.type.id == 1 # analisy_type.title == 'Concentrazione di attività di radon in aria (SSNTD\'s)'
-      text_box "#{Settings.reportpdf.bottom.analisy}", :at => [(bounds.left+1), bounds.bottom+20], :size => text_size-2, :overflow => :shrink_to_fit
-    end
+		text_box "#{Settings.reportpdf.bottom.analisy}", :at => [(bounds.left+1), bounds.bottom+20], :size => text_size-2, :overflow => :shrink_to_fit
 	end
 end
 
