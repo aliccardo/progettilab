@@ -85,8 +85,8 @@ class JobsController < ApplicationController
 
   # GET /jobs/new
   def new
-    @managers = User.select(:id, :label).pluck(:label, :id)
-    @chiefs = User.chiefs.select(:id, :label).pluck(:label, :id)
+    @managers = User.select(:id, :label).enabled.pluck(:label, :id)
+    @chiefs = User.chiefs.select(:id, :label).enabled.pluck(:label, :id)
     @job = Job.new(author: @user)
     add_breadcrumb "<i class='fa fa-plus'> #{I18n.t("breadcrumbs.jobs.new")}</i>".html_safe
   end

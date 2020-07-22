@@ -2,11 +2,11 @@
   %h4.text-center= "#{ t('roles', scope: 'jobs', default: 'Roles')} #{ t('title', scope: 'jobs', default: 'Details').downcase }"
   / RESPONSABILE AREA
   .grid-x.grid-padding-x.grid-margin-y
-    .small-12.cell= f.select_field_if can?( :update_chief, JobRole, job_id: job.id ), :chief_id, @chiefs.pluck(:label, :id),  options: { icon: 'user-secret', placeholder: job.chief.label, include_blank: false }, input_options: { class: 'input-group-field ' }
+    .small-12.cell= f.select_field_if can?( :update_chief, JobRole, job_id: job.id ), :chief_id, @chiefs.enabled.pluck(:label, :id),  options: { icon: 'user-secret', placeholder: job.chief.label, include_blank: false }, input_options: { class: 'input-group-field ' }
   / RESPONSABILI Proc/Att
   .grid-x.grid-padding-x.grid-margin-y
-    .small-12.cell= f.select_field_if can?(:update_managers, JobRole, job_id: job.id ), :job_manager_ids, @managers.pluck(:label, :id), options: { icon: 'users', placeholder: job.job_managers.pluck(:label).join(', '), valign: 'top' }, input_options: { include_blank: false, class: 'select2 input-group-field ', multiple: 'multiple', required: 'required' }
+    .small-12.cell= f.select_field_if can?(:update_managers, JobRole, job_id: job.id ), :job_manager_ids, @managers.enabled.pluck(:label, :id), options: { icon: 'users', placeholder: job.job_managers.pluck(:label).join(', '), valign: 'top' }, input_options: { include_blank: false, class: 'select2 input-group-field ', multiple: 'multiple', required: 'required' }
   / TECNICI Proc/Att
   .grid-x.grid-padding-x.grid-margin-y
-    .small-12.cell= f.select_field_if can?(:update_technicians, JobRole, job_id: job.id ), :job_technician_ids, @technicians.pluck(:label, :id), options: { icon: 'users', placeholder: job.job_technicians.pluck(:label).join(', '), valign: 'top' }, input_options: { include_blank: false, class: 'select2 input-group-field ', multiple: 'multiple' }
+    .small-12.cell= f.select_field_if can?(:update_technicians, JobRole, job_id: job.id ), :job_technician_ids, @technicians.enabled.pluck(:label, :id), options: { icon: 'users', placeholder: job.job_technicians.pluck(:label).join(', '), valign: 'top' }, input_options: { include_blank: false, class: 'select2 input-group-field ', multiple: 'multiple' }
   .grid-x.grid-padding-x.grid-margin-y= f.submit_button icon: 'save', value: t( 'submit', scope: 'jobs.update', default: 'Save' )

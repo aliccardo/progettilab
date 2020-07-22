@@ -12,9 +12,9 @@
       .small-12.large-3.cell
         = f.hidden_field :analisy_chief_user_ids, value: @job.chief_id if @analisy.analisy_chief_user_ids.blank?
         = f.label_field :analisy_chief_user_ids, options: { required: true, placeholder: @job.chief.label, icon: 'user', label: t('chief', scope: 'analisies.fields', default: 'Chief') }
-      .small-12.large-3.cell= f.select_field_if true, :analisy_headtest_user_ids, User.headtests.select(:id, :label).pluck(:label, :id), options: { icon: 'user', include_blank: 'Seleziona uno dei seguenti valori', help:false, required: true }, input_options: { class: "input-group-field #{ 'invalid' if @analisy.persisted? && @analisy.invalid? && @analisy.errors.include?(:analisy_headtests) }", selected: @analisy.analisy_headtest_ids }
+      .small-12.large-3.cell= f.select_field_if true, :analisy_headtest_user_ids, User.headtests.select(:id, :label).enabled.pluck(:label, :id), options: { icon: 'user', include_blank: 'Seleziona uno dei seguenti valori', help:false, required: true }, input_options: { class: "input-group-field #{ 'invalid' if @analisy.persisted? && @analisy.invalid? && @analisy.errors.include?(:analisy_headtests) }", selected: @analisy.analisy_headtest_ids }
     .cell.grid-x.grid-padding-x
-      .small-12.large-6.cell= f.select_field_if true, :analisy_technic_user_ids,  User.technics.pluck(:label, :id), options: { icon: 'users', placeholder: @analisy.analisy_technic_users.pluck(:label).join(', '), required: true }, input_options: { include_blank: false, class: 'select2 input-group-field ', multiple: 'multiple' }
+      .small-12.large-6.cell= f.select_field_if true, :analisy_technic_user_ids,  User.technics.enabled.pluck(:label, :id), options: { icon: 'users', placeholder: @analisy.analisy_technic_users.pluck(:label).join(', '), required: true }, input_options: { include_blank: false, class: 'select2 input-group-field ', multiple: 'multiple' }
 
   %h6= t('title', scope: 'analisyresults', default: 'Results')
   %table

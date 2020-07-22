@@ -9,5 +9,5 @@
         .cell= f.switch_field :consolidated, class: 'switch-input input-group-field', inline: true
         .cell= f.textarea :body, inline: true, icon: 'pencil', valign: 'top'
         .cell= f.select_field_if true, :chief_id, @chiefs,  options: { icon: 'user-secret', include_blank: false, inline: true }, input_options: { class: 'input-group-field' }
-        .cell= f.select_field_if true, :job_manager_ids, @managers, options: { icon: 'users', placeholder: @job.job_managers.pluck(:label).join(', '), valign: 'top', inline: true }, input_options: { include_blank: false, class: 'select2 input-group-field ', multiple: 'multiple', required: 'required' }
+        .cell= f.select_field_if true, :job_manager_ids, @managers, options: { icon: 'users', placeholder: @job.job_managers.enabled.pluck(:label).join(', '), valign: 'top', inline: true }, input_options: { include_blank: false, class: 'select2 input-group-field ', multiple: 'multiple', required: 'required' }
       .grid-x.grid-padding-x.grid-margin-y= f.submit_button icon: 'save'

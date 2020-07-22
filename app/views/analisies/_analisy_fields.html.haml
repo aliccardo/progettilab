@@ -13,13 +13,13 @@
     .small-12.large-4.cell
       - f.object.analisy_chiefs.build
       = f.fields_for :analisy_chiefs do |c|
-        = c.select_field :user_id, User.chiefs.select(:id, :label).pluck(:label, :id), { icon: 'list', include_blank: false, inline: true, help:false, label: t('chief', scope: 'analisies.fields', default: 'Chief') }, { class: 'input-group-field select2' }
+        = c.select_field :user_id, User.chiefs.select(:id, :label).enabled.pluck(:label, :id), { icon: 'list', include_blank: false, inline: true, help:false, label: t('chief', scope: 'analisies.fields', default: 'Chief') }, { class: 'input-group-field select2' }
     .small-12.large-4.cell
       - f.object.analisy_headtests.build
       = f.fields_for :analisy_headtests do |c|
-        .nested-fields= c.select_field :user_id, User.headtests.select(:id, :label).pluck(:label, :id), { icon: 'list', include_blank: false, inline: true, help:false, label: t('headtests', scope: 'analisies.fields', default: 'Headtest') }, { class: 'input-group-field select2' }
+        .nested-fields= c.select_field :user_id, User.headtests.select(:id, :label).enabled.pluck(:label, :id), { icon: 'list', include_blank: false, inline: true, help:false, label: t('headtests', scope: 'analisies.fields', default: 'Headtest') }, { class: 'input-group-field select2' }
     .small-12.large-4.cell
-      = f.select_field :analisy_technic_user_ids, User.technics.select(:id, :label).pluck(:label, :id), { icon: 'list', include_blank: false, inline: true, help:false, label: t('technics', scope: 'analisies.fields', default: 'Technic') }, { class: 'input-group-field select2', multiple: 'multiple' }
+      = f.select_field :analisy_technic_user_ids, User.technics.select(:id, :label).enabled.pluck(:label, :id), { icon: 'list', include_blank: false, inline: true, help:false, label: t('technics', scope: 'analisies.fields', default: 'Technic') }, { class: 'input-group-field select2', multiple: 'multiple' }
 
   .grid-x
     .small-12.large-8.float-center.cell= link_to_remove_association fa_icon('trash', class: 'button alert radius small expanded'), f
