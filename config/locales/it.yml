@@ -648,7 +648,7 @@ it:
     no_data_found: 'Nessuna analisi inserita'
     fields:
       sample_id: 'Id campione'
-      sample_code: 'Codice campione'
+      sample_code: 'Cod.Laboratorio'
       code: 'Codice analisi'
       revision: 'Revisione'
       analisy_type: 'Tipo analisi'
