@@ -93,7 +93,13 @@ module Single
 		stroke_rectangle [ rect_left, cursor+5 ], rect_width, 20
 		text_box "#{@report.analisy.performed_on}", :size => text_size, :at => [field_left, cursor]
 
-		unless @report.analisy.type.id == 1 # analisy_type.title == 'Concentrazione di attività di radon in aria (SSNTD\'s)'
+		# analisy_type.title == 'Concentrazione di attività di radon in aria (SSNTD\'s)' <=> 1
+		# analisy_type.title == 'Esposizione di radon in aria (SSNTD\'s)'                <=> 2
+		# analisy_type.title == 'Concentrazione/esposizione di radon in aria (SSNTD\'s)' <=> 3
+		# analisy_type.title == 'Concentrazione di attività di radon in aria (monitore)' <=> 11
+		# analisy_type.title == 'Esposizione di radon in aria (monitore)'                <=> 12
+		# analisy_type.title == 'Concentrazione/esposizione di radon in aria (monitore)' <=> 13
+		unless [1, 2, 3, 11, 12, 13].include?(@report.analisy.type.id)
 			move_down(25)
 			text_box I18n.t('reference_at', scope: 'reports.fields', default: 'Reference at').upcase, :size => label_size, :at => [left, cursor]
 			stroke_rectangle [ rect_left, cursor+5 ], rect_width, 20
