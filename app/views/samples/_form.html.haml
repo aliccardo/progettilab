@@ -17,7 +17,6 @@
       .cell.grid-x.grid-padding-x
         .small-12.medium-4.cell= f.date_time_field :start_at, icon: 'calendar', autocomplete: 'false'
         .small-12.medium-4.cell= f.date_time_field :stop_at, icon: 'calendar', autocomplete: 'false'
-        .small-6.medium-2.cell= f.label_field :accepted_at, options: { required: false, placeholder: @sample.accepted_on || l(Date.today), icon: 'calendar' }
       .cell.grid-x.grid-padding-x
         .large-6.cell= f.text_field :latitude, autocomplete: "off", icon: 'map-o', help_text: "espressa in gradi decimali", value: number_with_precision(@sample.latitude, strip_insignificant_zeros: true, precision: 14, separator: '.', delimiter: '' )
         .large-6.cell= f.text_field :longitude, autocomplete: "off", icon: 'map-o', help_text: "espressa in gradi decimali", value: number_with_precision(@sample.longitude, strip_insignificant_zeros: true, precision: 14, separator: '.', delimiter: '' )
